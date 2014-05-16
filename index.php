@@ -1,3 +1,5 @@
+<!doctype html>
+<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
@@ -75,7 +77,7 @@
 		};
 		return result;
 	}
-	
+
 	function ladeFahrplan(){
 		$.ajax({
 		    url: 'php/fahrplan.php',
@@ -125,7 +127,7 @@
 	include("php/news.php");
 ?>
 </head>
-<body> 
+<body>
 <div id="content">
 	<img src="images/geofspacman.png" style="position: absolute; right: 0;">
 	<div id="uhr">hh:mm:ss</div>
@@ -182,14 +184,14 @@
 	}
 
 	function setImage(){
-		if (showCartoon){			
+		if (showCartoon){
 			document.getElementById("plakat1").src = 'http://www.ruthe.de/cartoons/strip_' + getRandom(1733) + '.jpg';
 			//document.getElementById("plakat1").src = 'images/cartoons/' + cartoons[cartoonCounter%cartoons.length];
 			//cartoonCounter++;
 			timer = 10;
 			showCartoon = false;
 		}
-		else {	
+		else {
 			changePoster(plakate[i%plakate.length]);
 			console.log(i + ': ' + plakate[i%plakate.length]);
 			timer = getTime(plakate[i%plakate.length]);
@@ -209,3 +211,4 @@
 	//refreshRegenradar();
 </script>
 </body>
+</html>
