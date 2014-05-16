@@ -3,3 +3,5 @@ displaycontent/plakate/*
 images/cartoons/*
 
 .DS_Store
+
+.vagrant
