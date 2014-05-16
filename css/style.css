@@ -1,0 +1,170 @@
+@font-face {
+	font-family: geofsFont;
+	src: url(fonts/HelveticaNeueLight.woff);
+}
+
+html {
+	overflow: hidden;
+}
+
+body {
+	overflow: hidden;
+	margin: 0;
+	background-color: #fefefe;
+	color: #151515;
+	font-family: geofsFont;
+	font-size: 20px;
+}
+
+.header {
+	margin: 5px;
+}
+
+#content {
+	width: 1156px;
+	position: absolute;
+	height: 100%;
+	left: 0;
+}
+
+.content img {
+	height: 100%;
+}
+
+#uhr {
+	position: absolute;
+	left: 500px;
+	top: 120px;
+	font-size: 65px;
+}
+
+#news {
+	position: absolute;
+	top: 400px;
+	height: 370px;
+	width: 1136px;
+	overflow: hidden;
+	padding: 10px;
+}
+
+.newstitle {
+	padding: 5px;
+	background-color: midnightblue;
+	color: #eeeeee;
+	padding-left: 10px;
+	font-size: 35px;
+}
+
+.newstext {
+	padding: 5px;
+	color: midnightblue;
+	padding-bottom: 10px;
+	padding-left: 25px;
+	font-size: 30px;
+}
+
+#fahrplan {
+	position: absolute;
+	height: auto;
+	width: 400px;
+	left: 378px;
+	top: 255px;
+	color: #fefefe;
+	background-color: #fefefe;
+	overflow: hidden;
+	margin: 5px;
+	font-size: 2px;
+}
+#fahrplan .bgdark{
+	color: orange;
+	background-color: black;
+	padding-bottom: 5px;
+	font-size: 24px;
+}
+
+#fahrplan .bgwith{
+	color: orange;
+	background-color: black;
+	padding-bottom: 5px;
+	font-size: 24px;
+}
+
+#fahrplan .haltestellenlable {
+	text-align: left;
+	color: black;
+	padding: 2px;
+	font-size: 28px;
+}
+
+#fahrplan .line {
+	position: absolute;
+	left: 0;
+	padding: 5px;
+}
+
+#fahrplan .time {
+	position: absolute;
+	right: 0;
+	padding: 5px;
+}
+
+#fahrplan .direction {
+	position: absolute;
+	left: 34px;
+	padding: 5px;
+}
+
+#regenradar {
+	position: absolute;
+	bottom: -50px;
+	left: 425px;
+	height: 330px;
+	width: auto;
+}
+
+.praesidienst {
+	position: absolute;
+	bottom: 0;
+	/*max-width: 417px;*/
+	max-width: 550px;
+	max-height: 300px;
+	overflow: hidden;
+	margin: 10px;
+}
+
+.praesidienst table {
+	table-layout: auto;
+	height: 250px;
+	font-size: 11px;
+	border: 1px solid grey;
+	border-collapse: collapse;
+}
+
+.praesidienst table td, th { 
+	border-left: 1px solid grey;
+	border-top: 1px solid grey;
+}
+
+.praesidienst table td:first-child {
+	border-left: none;
+}
+
+.praesidienst th {
+	width: 45px;
+	/*border: 1px solid black;*/
+}
+
+#praesiGeoloek {
+	left:0;
+}
+
+#praesiGeofs {
+	right: 0px;
+	text-align: left;
+}
+
+.plakate {
+	position: absolute;
+	height: 100%;
+	right: 0;
+}
