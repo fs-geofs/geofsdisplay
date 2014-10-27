@@ -41,12 +41,12 @@
 
 	function ladeNews(){
 		// Für durchlaufende News:
-			// newsCounter++;
-			// var index = newsCounter%newsText.length;
+			// newsCounter = (newsCounter++)%newsText.length;
+			// var index = newsCounter;
 			// document.getElementById("news").innerHTML = '<div class="latestNews" style="display: none;"><div class="newstitle">' + newsTitle[index] + '</div><div class="newstext">' + newsText[index] + '</div></div>' + document.getElementById("news").innerHTML;
 			// $(".latestNews").fadeIn("slow");
 			// console.log("counter: " + index);
-			// window.setTimeout("ladeNews()", 10000);
+			// window.setTimeout("ladeNews()", 3000);
 		//Für dauerhaft angezeigte News:
 			for (var i = newsTitle.length - 1; i >= 0; i--) {
 				document.getElementById("news").innerHTML = '<div class="latestNews"><div class="newstitle">' + newsTitle[i] + '</div><div class="newstext">' + newsText[i] + '</div></div>' + document.getElementById("news").innerHTML;
@@ -124,6 +124,7 @@
 <?php
 	include("php/plakate.php");
 	include("php/cartoons.php");
+	include("php/mensaplaene.php");
 	include("php/news.php");
 ?>
 </head>
