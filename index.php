@@ -40,14 +40,15 @@
 	}
 
 	function ladeNews(){
-		// Für durchlaufende News:
-			// newsCounter = (newsCounter++)%newsText.length;
-			// var index = newsCounter;
-			// document.getElementById("news").innerHTML = '<div class="latestNews" style="display: none;"><div class="newstitle">' + newsTitle[index] + '</div><div class="newstext">' + newsText[index] + '</div></div>' + document.getElementById("news").innerHTML;
-			// $(".latestNews").fadeIn("slow");
-			// console.log("counter: " + index);
-			// window.setTimeout("ladeNews()", 3000);
-		//Für dauerhaft angezeigte News:
+			// Für durchlaufende News:
+			/*newsCounter = (newsCounter++)%newsText.length;
+			var index = newsCounter;
+			document.getElementById("news").innerHTML = '<div class="latestNews" style="display: none;"><div class="newstitle">' + newsTitle[index] + '</div><div class="newstext">' + newsText[index] + '</div></div>' + document.getElementById("news").innerHTML;
+			$(".latestNews").fadeIn("slow");
+			console.log("counter: " + index);
+			window.setTimeout("ladeNews()", 3000);*/
+
+			// Für dauerhaft angezeigte News:
 			for (var i = newsTitle.length - 1; i >= 0; i--) {
 				document.getElementById("news").innerHTML = '<div class="latestNews"><div class="newstitle">' + newsTitle[i] + '</div><div class="newstext">' + newsText[i] + '</div></div>' + document.getElementById("news").innerHTML;
 			};
@@ -92,20 +93,21 @@
 		window.setTimeout("ladeFahrplan()", 15000);
 	}
 
+	// only shows the current day in the table of präsizeiten
 	function viewPraesiDay(){
-		// $(".col1").hide();
-		// $(".col2").hide();
-		// $(".col3").hide();
-		// $(".col4").hide();
-		// $(".col5").hide();
-		// var today = new Date();
-		// // var day = (praesiCounter%5)+1;
-		// var day = today.getDay();
-		// $(".col" + day).fadeIn();
-		// praesiCounter++;
-		// window.setTimeout("viewPraesiDay()", 5000);
+		$(".col1").hide();
+		$(".col2").hide();
+		$(".col3").hide();
+		$(".col4").hide();
+		$(".col5").hide();
+		var today = new Date();
+		var day = today.getDay();
+		$(".col" + day).fadeIn();
+		praesiCounter++;
+		window.setTimeout("viewPraesiDay()", 5000);
 	}
 
+	// returns the displaytime assigned to a plakat. defaults to 10 if none is found in the name
 	function getTime(name){
 		var nameArray = name.split('-');
 		var time = parseFloat(nameArray[1]);
@@ -117,7 +119,6 @@
 
 	function refreshRegenradar(){
 		document.getElementById("regenradar").src = "http://www.wetteronline.de/?pid=p_radar_map&ireq=true&src=radar/vermarktung/p_radar_map_forecast/forecastLoop/NRW/latestForecastLoop.gif";
-		window.setTimeout("viewPraesiDay()", 200000);
 	}
 </script>
 <link rel="stylesheet" type="text/css" href="css/style.css">
@@ -130,9 +131,9 @@
 </head>
 <body>
 <div id="content">
-	<img src="images/geofspacman.png" style="position: absolute; right: 0;">
+	<img src="images/geofspacman.png" style="position: absolute; right: 0;" onclick="window.location.reload()">
 	<div id="uhr">hh:mm:ss</div>
-	<img src="images/geoloek.png" style="position: absolute; left: 0;">
+	<img src="images/geoloek.png" style="position: absolute; left: 0;" onclick="window.location.reload()">
 	<div id="news">
 		<div></div>
 	</div>
@@ -155,18 +156,10 @@
 <script type="text/javascript">
 	var timer = 5000;
 	var i = 0;
-	var cartoonCounter = 0;
 	var showCartoon = false;
-
-	viewPraesiDay();
 
 	function changePoster(url){
 		document.getElementById("plakat1").src = 'displaycontent/plakate/' + url;
-		// var img1 = "plakat" + i%2;
-		// var img2 = "plakat" + (1 - i%2);
-		// document.getElementById(img1).src = 'images/plakate/' + url;
-		// $("#"+img1).fadeIn( 1000);
-		// $("#"+img2).fadeOut( 1000);
 	}
 
 	function getRandom(max){
@@ -187,8 +180,6 @@
 	function setImage(){
 		if (showCartoon){
 			document.getElementById("plakat1").src = 'http://www.ruthe.de/cartoons/strip_' + getRandom(1733) + '.jpg';
-			//document.getElementById("plakat1").src = 'images/cartoons/' + cartoons[cartoonCounter%cartoons.length];
-			//cartoonCounter++;
 			timer = 10;
 			showCartoon = false;
 		}
@@ -209,6 +200,7 @@
 	ladeNews();
 	aktiviereUhr();
 	ladeFahrplan();
+	//viewPraesiDay();
 	//refreshRegenradar();
 </script>
 </body>
