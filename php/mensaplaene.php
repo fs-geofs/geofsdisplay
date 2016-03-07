@@ -1,4 +1,4 @@
-<?php $url =  "http://www.studentenwerk-muenster.de/essen-a-trinken/mensen/mensa-am-ring"; 
+<?php $url =  "http://www.studentenwerk-muenster.de/de/essen-a-trinken/mensen/mensa-am-ring"; 
 $input = @file_get_contents($url) or die('Could not access file: $url'); 
 $mensaplan;
 $tag = date("w");
