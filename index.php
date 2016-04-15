@@ -3,6 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="./js/hammerjs-v2.0.6.js"></script>
 <script type="text/javascript">
 	var plakate = [];
 	var cartoons = [];
@@ -14,7 +15,7 @@
 	xmlHttp = new XMLHttpRequest();
 
 	function resetFileNames(type){
-		if (type == "plakte") {
+		if (type == "plakate") {
 			plakte = [];
 		}
 		if (type == "news"){
@@ -148,14 +149,15 @@
 		<?php include("php/praesidienste-geofs.php"); ?>
 	</div>
 </div>
-<div id="plakateFrame">
-<img id="plakat1" class="plakate" src="images/geofspacman.png"></img>
+<!--div id="plakateFrame" class="plakate"-->
+<img id="plakat1" class="plakate" src="images/geofspacman.png" draggable="false" onmousedown="if (event.preventDefault) event.preventDefault()"></img>
 <!-- <img id="plakat0" class="plakate" src="images/geofspacman.png"></img> -->
 </div>
 <script type="text/javascript">
 	var timer = 5000;
 	var i = 0;
 	var showCartoon = false;
+	var plakatTimeout = null;
 
 	function changePoster(url){
 		document.getElementById("plakat1").src = 'displaycontent/plakate/' + url;
@@ -181,18 +183,21 @@
 			document.getElementById("plakat1").src = 'http://www.ruthe.de/cartoons/strip_' + getRandom(1733) + '.jpg';
 			timer = 10;
 			showCartoon = false;
+			i++;
 		}
 		else {
 			changePoster(plakate[i%plakate.length]);
 			console.log(i + ': ' + plakate[i%plakate.length]);
 			timer = getTime(plakate[i%plakate.length]);
-			i++;
 			if (i%plakate.length == 0) {
 				showCartoon = true;
 			};
 		}
 		console.log("plakatTimer: " + timer + "sek.")
-		window.setTimeout("setImage()", (timer * 1000));
+		plakatTimeout = window.setTimeout(function() {
+			i++;
+			setImage();
+		}, (timer * 1000));
 	}
 
 	setImage();
@@ -201,6 +206,20 @@
 	ladeFahrplan();
 	//viewPraesiDay();
 	//refreshRegenradar();
+
+	// register swipe gestures on plakateFrame
+    var plakatTouch = new Hammer(document.getElementById('plakat1'));
+	plakatTouch.on('swipeleft', function(e) {
+		if (--i < 0) i = plakate.length - 1;
+		if (plakatTimeout) clearTimeout(plakatTimeout);
+		setImage();
+	});
+	plakatTouch.on('swiperight', function(e) {
+		if (++i > plakate.length - 1) i = 0;
+		if (plakatTimeout) clearTimeout(plakatTimeout);
+		setImage();
+		console.log('right lol' + i);
+	});
 </script>
 </body>
 </html>
