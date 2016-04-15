@@ -33,9 +33,8 @@
 		console.log(name);
 	}
 
-	function addNews(filepath, text){
-		var filearray = filepath.split('.');
-		newsTitle.push(filearray[0]);
+	function addNews(title, text){
+		newsTitle.push(title);
 		newsText.push(text);
 	}
 

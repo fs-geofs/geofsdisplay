@@ -18,7 +18,7 @@ $tage = array("sonntag","montag","dienstag","mittwoch","donnerstag","freitag","s
 	}
     ?>
 	    <script>
-	    	addNews("Heute in der Mensa am Ring:.txt", "<?php echo $mensaplan ?>");
+	    	addNews("Heute in der Mensa am Ring:", "<?php echo $mensaplan ?>");
 	    </script>
 	<?php
 ?>

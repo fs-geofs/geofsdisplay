@@ -24,7 +24,7 @@ foreach ($alledateien as $datei) {
         $newstext = file("./displaycontent/news/".$dateiinfo['basename']);
         ?>
         <script type="text/javascript">
-        	addNews("<?php echo (string)$dateiinfo['basename']; ?>", "<?php echo (string)$newstext[0] ?>");
+        	addNews("<?php echo (string)$dateiinfo['filename']; ?>", "<?php echo (string)$newstext[0] ?>");
         </script>
         <?php
     };
