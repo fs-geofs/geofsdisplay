@@ -1,7 +1,4 @@
-displaycontent/news/*
-displaycontent/plakate/*
-images/cartoons/*
+displaycontent
 
 .DS_Store
-
 .vagrant

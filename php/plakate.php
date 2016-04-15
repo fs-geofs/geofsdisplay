@@ -22,7 +22,7 @@ foreach ($alledateien as $datei) {
     if (in_array($dateiinfo['extension'], array('jpg','jpeg','png', 'webp', 'gif')) == 1 ) {
     ?>
 	<script type="text/javascript">
-		addFileNames("plakate", "<?php echo (string)$dateiinfo['basename']; ?>");
+		addPlakate("<?php echo (string)$dateiinfo['basename']; ?>");
 	</script>
 <?php
     };
