@@ -1,6 +1,7 @@
 <?php
 // Ordnername
 $ordner = "./displaycontent/news"; //auch komplette Pfade möglich ($ordner = "download/files";)
+$fileExts = array("txt", "md");
 
 // Ordner auslesen und Array in Variable speichern
 $alledateien = scandir($ordner); // Sortierung A-Z
@@ -19,12 +20,12 @@ foreach ($alledateien as $datei) {
     // $dateiinfo['basename'] = voller Dateiname mit Dateiendung
 
     // nur Dateien mit txt extension zulassen
-    if (in_array($dateiinfo['extension'], array('txt')) == 1 ) {
+    if (in_array($dateiinfo['extension'], $fileExts)) {
 
-        $newstext = file("./displaycontent/news/".$dateiinfo['basename']);
+        $newstext = implode(file($ordner."/".$datei, FILE_IGNORE_NEW_LINES), "<br>");
         ?>
         <script type="text/javascript">
-        	addNews("<?php echo (string)$dateiinfo['filename']; ?>", "<?php echo (string)$newstext[0] ?>");
+        	addNews("<?php echo $dateiinfo['filename']; ?>", "<?php echo $newstext ?>");
         </script>
         <?php
     };
