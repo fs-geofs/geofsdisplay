@@ -34,7 +34,7 @@ body {
 #uhr {
 	position: absolute;
 	left: 500px;
-	top: 120px;
+	top: 50px;
 	font-size: 65px;
 }
 
@@ -68,7 +68,7 @@ body {
 	height: auto;
 	width: 400px;
 	left: 378px;
-	top: 255px;
+	top: 150px;
 	color: #fefefe;
 	background-color: #fefefe;
 	overflow: hidden;
