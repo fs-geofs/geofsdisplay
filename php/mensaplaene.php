@@ -25,21 +25,26 @@
   $input = @file_get_contents($url) or die("Could not access file: $url"); 
   $mensa = simplexml_load_string($input) or die("Could not parse XML to object");
   
-  $mensaplan = '';
+  $meals = [];
 	
-	// Go through all of today's meals
+  // Go through all of today's meals
   foreach($mensa->date[0]->item as $meal)
-	{
-    // Potentially remove "Heute am " from "Heute am Aktionsstand WOK" to make it shorter
-    $category = str_replace('Heute am ', '', $meal->category);
-    // Remove additives list from meal description (always in round brackets) and also remove
-    // possible newlines that would cause the JS to complain about an "unterminated string literal"
-    $name = preg_replace(['/ ?\([^(]*\)/', '/\s/'], ['', ' '], $meal->meal);
-    
-    $mensaplan .= "$category: $name<br>";
+  {
+    if($meal->category != 'Dessertbuffet')
+    {
+      // Potentially remove "Heute am " from "Heute am Aktionsstand WOK" to make it shorter
+      $category = str_replace('Heute am ', '', $meal->category);
+      // Remove additives list from meal description (always in round brackets) and also remove
+      // possible newlines that would cause the JS to complain about an "unterminated string literal"
+      $name = preg_replace(['/ ?\([^(]*\)/', '/\s/'], ['', ' '], $meal->meal);
+      
+      $meals[] = "$category: $name";
+    }
   }
+  
+  $mensaplan = implode('<br>', $meals);
 ?>
 
 <script>
-	addNews("Heute in der Mensa am Ring:", "<?php echo addslashes($mensaplan); ?>");
+  addNews("Heute in der Mensa am Ring:", "<div id='mensaplan'><?php echo addslashes($mensaplan); ?></div>");
 </script>
