@@ -22,29 +22,35 @@
     The Studentenwerk outsourced this to digital signage company infomax.de
   */
    
-  $input = @file_get_contents($url) or die("Could not access file: $url"); 
-  $mensa = simplexml_load_string($input) or die("Could not parse XML to object");
-  
-  $meals = [];
-	
-  // Go through all of today's meals
-  foreach($mensa->date[0]->item as $meal)
+  if (! $input = @file_get_contents($url))
   {
-    if($meal->category != 'Dessertbuffet')
-    {
-      // Potentially remove "Heute am " from "Heute am Aktionsstand WOK" to make it shorter
-      $category = str_replace('Heute am ', '', $meal->category);
-      // Remove additives list from meal description (always in round brackets) and also remove
-      // possible newlines that would cause the JS to complain about an "unterminated string literal"
-      $name = preg_replace(['/ ?\([^(]*\)/', '/\s/'], ['', ' '], $meal->meal);
-      
-      $meals[] = "$category: $name";
-    }
+    $mensaplan = "Konnte Mensaplan nicht laden - Studentenwerk-Server offline?";
   }
-  
-  $mensaplan = implode('<br>', $meals);
+  else
+  {
+    $mensa = simplexml_load_string($input) or die("Could not parse XML to object");
+    
+    $meals = [];
+  	
+    // Go through all of today's meals
+    foreach($mensa->date[0]->item as $meal)
+    {
+      if($meal->category != 'Dessertbuffet')
+      {
+        // Potentially remove "Heute am " from "Heute am Aktionsstand WOK" to make it shorter
+        $category = str_replace('Heute am ', '', $meal->category);
+        // Remove additives list from meal description (always in round brackets) and also remove
+        // possible newlines that would cause the JS to complain about an "unterminated string literal"
+        $name = preg_replace(['/ ?\([^(]*\)/', '/\s/'], ['', ' '], $meal->meal);
+        
+        $meals[] = "$category: $name";
+      }
+    }
+    
+    $mensaplan = implode('<br>', $meals);
+  }
 ?>
 
 <script>
   addNews("Heute in der Mensa am Ring:", "<div id='mensaplan'><?php echo addslashes($mensaplan); ?></div>");
-</script>
+</script>  
