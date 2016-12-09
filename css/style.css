@@ -16,43 +16,102 @@ body {
 	font-size: 20px;
 }
 
-.header {
-	margin: 5px;
+#container {
+    display:flex;
+    height:100vh;
 }
 
 #content {
-	width: 1156px;
-	position: absolute;
+	/*width: /*1156px;*/
+  /*width:100%;
+	position: absolute;*/
 	height: 100%;
-	left: 0;
+	/*left: 0;*/
+  flex:1;
+  position:relative;
+  display:flex;
+  flex-direction:column;
 }
 
-.content img {
+#plakate {
+  height:100%;
+  width:33vw!important;
+  flex:none;
+}
+
+#plakate img {
 	height: 100%;
+}
+
+#header {
+	margin: 5px;
+  display:flex;
+  flex:none;
+}
+
+#footer {
+  flex:none;
+  z-index:10;
+  background-color:#fefefe;
+}
+
+#main {
+  flex:1;
+}
+
+.fslogo {
+  height:100px;
+}
+
+#geofspacman {
+  /*position: absolute;
+  left:200px;*/
+  flex:none;
+}
+
+#geoloekbaum {
+  /*position: absolute;
+  left: 0;*/
+  flex:none;
 }
 
 #uhr {
-	position: absolute;
+	/*position: absolute;
 	left: 500px;
-	top: 50px;
-	font-size: 65px;
+	top: 50px;*/
+	font-size: 70px;
+  flex:none;
 }
 
 #news {
-	position: absolute;
+	/*position: absolute;
 	top: 400px;
 	height: 370px;
 	width: 1136px;
 	overflow: hidden;
-	padding: 10px;
+	padding: 10px;*/
+  column-count:2;
+  column-rule:solid;
+}
+
+p {
+  margin:0;
+}
+
+.latestNews {
+  width:45%;
+  margin:2%;
+  float:left;
+  border:3px solid #8cc63f;
 }
 
 .newstitle {
 	padding: 5px;
-	background-color: midnightblue;
+  margin:0;
+	background-color: #8cc63f;
 	color: #eeeeee;
 	padding-left: 10px;
-	font-size: 35px;
+	font-size: 16pt;
 }
 
 .newstext {
@@ -60,58 +119,115 @@ body {
 	color: midnightblue;
 	padding-bottom: 10px;
 	padding-left: 25px;
-	font-size: 30px;
+	font-size: 12pt;
+}
+
+#news div:first-child table {
+  hyphens:auto;
+  font-size:12pt;
+  border-width:0;
+}
+
+#news div:first-child table th {
+  vertical-align:top;
+  text-align:left;
 }
 
 #fahrplan {
-	position: absolute;
+	flex:1;
+  /*position: absolute;
 	height: auto;
 	width: 400px;
 	left: 378px;
-	top: 150px;
+	top: 0px;*/
+  position:relative;
 	color: #fefefe;
 	background-color: #fefefe;
 	overflow: hidden;
 	margin: 5px;
 	font-size: 2px;
-}
-#fahrplan .bgdark{
-	color: orange;
-	background-color: black;
-	padding-bottom: 5px;
-	font-size: 24px;
+  display:flex;
 }
 
-#fahrplan .bgwith{
+#fahrplan img {
+  flex:auto;
+  display:none;
+}
+
+#einwaerts, #auswaerts {
+  flex:1;
+  margin:5px;
+}
+
+#einwaerts span, #auswaerts span {
+  display:inline-block;
+  background-image:url('../images/busstop.png');
+  background-repeat:no-repeat;
+  background-size:contain;
+  margin-bottom:5px;
+  padding-left:35px!important;
+  
+}
+
+#einwaerts span:after {
+  content: " (einwärts)";
+}
+
+#auswaerts span:after {
+  content: " (auswärts)";
+}
+
+#fahrplan .bgdark, #fahrplan .bgwith {
 	color: orange;
 	background-color: black;
 	padding-bottom: 5px;
-	font-size: 24px;
+	font-size: 14px;
+}
+
+.bgdark {
+  padding-top:5px;
+}
+
+.borden:before {
+  content:"Jetzt";
 }
 
 #fahrplan .haltestellenlable {
 	text-align: left;
 	color: black;
 	padding: 2px;
-	font-size: 28px;
+	font-size: 16px;
 }
 
+.bgwith, .bgdark {
+  display:flex;
+}
+
+
 #fahrplan .line {
-	position: absolute;
+	/*
+  position: absolute;
 	left: 0;
-	padding: 5px;
+	padding: 5px;*/
+  flex:none;
+  min-width:30px;
+  text-align:right;
+  padding-right:15px;
 }
 
 #fahrplan .time {
-	position: absolute;
+	/*position: absolute;
 	right: 0;
-	padding: 5px;
+	padding: 5px;*/
+  flex:none;
+  padding-right:10px;
 }
 
 #fahrplan .direction {
-	position: absolute;
+	/*position: absolute;
 	left: 34px;
-	padding: 5px;
+	padding: 5px;*/
+  flex:1;
 }
 
 #regenradar {
@@ -126,8 +242,8 @@ body {
 	position: absolute;
 	bottom: 0;
 	/*max-width: 417px;*/
-	max-width: 550px;
-	max-height: 300px;
+	/*max-width: 550px;*/
+	max-height: 33vh;
 	overflow: hidden;
 	margin: 10px;
 }
@@ -140,7 +256,7 @@ body {
 	border-collapse: collapse;
 }
 
-.praesidienst table td, th { 
+.praesidienst table td, .praesidienst table th { 
 	border-left: 1px solid grey;
 	border-top: 1px solid grey;
 }
@@ -163,11 +279,12 @@ body {
 	text-align: left;
 }
 
-.plakate {
-	position: absolute;
+/*.plakate {
+	/*position: absolute;
 	height: 100%;
-	right: 0;
-}
+	right: 0;*/
+  
+//}
 
 #mensaplan {
 	font-size: 20px;

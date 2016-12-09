@@ -38,19 +38,19 @@
       if($meal->category != 'Dessertbuffet')
       {
         // Potentially remove "Heute am " from "Heute am Aktionsstand WOK" to make it shorter
-        $category = str_replace('Heute am ', '', $meal->category);
+        $category = str_replace('Heute am Aktionsstand (WOK)', 'Buffetsaal', $meal->category);
         // Remove additives list from meal description (always in round brackets) and also remove
         // possible newlines that would cause the JS to complain about an "unterminated string literal"
         $name = preg_replace(['/ ?\([^(]*\)/', '/\s/'], ['', ' '], $meal->meal);
         
-        $meals[] = "$category: $name";
+        $meals[] = "<th>$category</th><td>$name</td>";
       }
     }
     
-    $mensaplan = implode('<br>', $meals);
+    $mensaplan = "<table><tr>" . implode('</tr><tr>', $meals) . "</tr></table>";
   }
 ?>
 
 <script>
-  addNews("Heute in der Mensa am Ring:", "<div id='mensaplan'><?php echo addslashes($mensaplan); ?></div>");
+  addNews("Heute in der Mensa am Ring:", "<?php echo addslashes($mensaplan); ?>");
 </script>  

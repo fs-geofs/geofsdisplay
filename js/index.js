@@ -26,8 +26,8 @@ function addNews(title, text) {
 function ladeNews() {
   document.getElementById("news").innerHTML = '';
   for (var i = news.length - 1; i >= 0; i--) {
-    document.getElementById("news").innerHTML = '<div class="latestNews"><div class="newstitle">' + news[i].title +
-      '</div><div class="newstext">' + news[i].text + '</div></div>' + document.getElementById("news").innerHTML;
+    document.getElementById("news").innerHTML = '<div class="latestNews"><h3 class="newstitle">' + news[i].title +
+      '</h3>' + (news[i].text!='' ? '<p class="newstext">' + news[i].text + '</p>' : '') + '</div>' + document.getElementById("news").innerHTML;
   }
 }
 
