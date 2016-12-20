@@ -3,6 +3,8 @@ var xmlHttp = new XMLHttpRequest(),
   news = [],
   currentHour = 0,
   currentPlakat = 0,
+  currentRegenradar = 0,
+  regenradarTimeout = null,
   plakatTimeout = null,
   plakatTouch = new Hammer(document.getElementById('plakat'));
 
@@ -24,7 +26,8 @@ function addNews(title, text) {
 }
 
 function ladeNews() {
-  document.getElementById("news").innerHTML = '';
+  //auskommentiert um Regenradar nicht zu überschreiben
+  //document.getElementById("news").innerHTML = '';
   for (var i = news.length - 1; i >= 0; i--) {
     document.getElementById("news").innerHTML = '<div class="latestNews"><h3 class="newstitle">' + news[i].title +
       '</h3>' + (news[i].text!='' ? '<p class="newstext">' + news[i].text + '</p>' : '') + '</div>' + document.getElementById("news").innerHTML;
@@ -65,7 +68,29 @@ function ladeFahrplan() {
 }
 
 function refreshRegenradar() {
-  document.getElementById("regenradar").src = "http://www.wetteronline.de/?pid=p_radar_map&ireq=true&src=radar/vermarktung/p_radar_map_forecast/forecastLoop/NRW/latestForecastLoop.gif";
+  if (regenradarTimeout) clearTimeout(regenradarTimeout);
+  // get new images from wetteronline.de via regenradar.php
+  $.ajax({
+    url: 'php/regenradar.php',
+    type: 'GET',
+    success: function(responseText) { document.getElementById('regenradar').innerHTML = responseText; },
+    error: function(responseText) { console.error("could not get regenradar.php"); }
+  });
+  // refresh every 5 minutes
+  window.setTimeout(refreshRegenradar, 5*60*1000);
+  // cycle through frames with 0.5 sec for each frame
+  regenradarTimeout = window.setTimeout(cycleRegenradar, 500);
+}
+
+function cycleRegenradar() {
+  // hide old frame
+  document.getElementById('regenradar').childNodes[currentRegenradar].classList.add('preload');
+  // update count (it's always 23 frames)
+  currentRegenradar = (currentRegenradar+1) % 23;
+  // show new frame
+  document.getElementById('regenradar').childNodes[currentRegenradar].classList.remove('preload');
+  // schedule next cycle (show last frame a little bit longer)
+  regenradarTimeout = window.setTimeout(cycleRegenradar, (currentRegenradar==22 ? 2000 : 500));
 }
 
 //////////////////////////////////////////7
@@ -124,5 +149,5 @@ function init() {
   ladeNews();
   updateClock();
   ladeFahrplan();
-  //refreshRegenradar();
+  refreshRegenradar();
 }

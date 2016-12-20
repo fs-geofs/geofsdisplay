@@ -15,9 +15,8 @@
     </div>
     
     <div id="main">
-      <div id="news"></div>
-      <div id="regenradar">
-        <?php include('php/regenradar.php'); ?>
+      <div id="news">
+        <div class="latestNews"><h3 class="newstitle">Regenradar</h3><p class="newstext" id="regenradar"></p></div>
       </div>
       <!-- <img id="regenradar" src="http://www.wetteronline.de/?pid=p_radar_map&ireq=true&src=radar/vermarktung/p_radar_map_forecast/forecastLoop/NRW/latestForecastLoop.gif"> -->
     </div>

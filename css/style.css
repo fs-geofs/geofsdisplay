@@ -230,12 +230,12 @@ p {
   flex:1;
 }
 
-#regenradar {
-	position: absolute;
-	bottom: -50px;
-	left: 425px;
-	height: 330px;
-	width: auto;
+#regenradar img {
+	width:95%;  
+}
+
+#regenradar img.preload {
+  display:none;
 }
 
 .praesidienst {
