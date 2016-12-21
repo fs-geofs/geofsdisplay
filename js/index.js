@@ -73,7 +73,7 @@ function refreshRegenradar() {
   $.ajax({
     url: 'php/regenradar.php',
     type: 'GET',
-    success: function(responseText) { document.getElementById('regenradar').innerHTML = responseText; },
+    success: function(responseText) { document.getElementById('regenradar').innerHTML = responseText + '<img id="mapfooter">'; },
     error: function(responseText) { console.error("could not get regenradar.php"); }
   });
   // refresh every 5 minutes
@@ -89,6 +89,9 @@ function cycleRegenradar() {
   currentRegenradar = (currentRegenradar+1) % 23;
   // show new frame
   document.getElementById('regenradar').childNodes[currentRegenradar].classList.remove('preload');
+  
+  document.getElementById('mapfooter').src = document.getElementById('regenradar').childNodes[currentRegenradar].src;
+  
   // schedule next cycle (show last frame a little bit longer)
   regenradarTimeout = window.setTimeout(cycleRegenradar, (currentRegenradar==22 ? 2000 : 500));
 }
