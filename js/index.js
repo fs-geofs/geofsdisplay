@@ -82,6 +82,12 @@ function refreshRegenradar() {
   regenradarTimeout = window.setTimeout(cycleRegenradar, 500);
 }
 
+function refreshRegenradarGif() {
+  document.getElementById('regenradar').innerHTML = '<img src="php/regenradargif.php">';
+  // refresh every 5 minutes
+  window.setTimeout(refreshRegenradar, 5*60*1000);
+}
+
 function cycleRegenradar() {
   // hide old frame
   document.getElementById('regenradar').childNodes[currentRegenradar].classList.add('preload');
@@ -94,6 +100,18 @@ function cycleRegenradar() {
   
   // schedule next cycle (show last frame a little bit longer)
   regenradarTimeout = window.setTimeout(cycleRegenradar, (currentRegenradar==22 ? 2000 : 500));
+}
+
+function refreshWetter() {
+  // get new data
+  $.ajax({
+    url: 'php/wetter.php',
+    type: 'GET',
+    success: function(responseText) { document.getElementById('wetter').innerHTML = responseText; },
+    error: function(responseText) { console.error("could not get wetter.php"); }
+  });
+  // refresh every 10 minutes
+  window.setTimeout(refreshWetter, 10*60*1000);
 }
 
 //////////////////////////////////////////7
@@ -152,5 +170,7 @@ function init() {
   ladeNews();
   updateClock();
   ladeFahrplan();
-  refreshRegenradar();
+  //refreshRegenradar();
+  refreshRegenradarGif();
+  refreshWetter();
 }
