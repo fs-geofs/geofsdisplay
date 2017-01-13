@@ -17,9 +17,6 @@
     <div id="main">
       <div id="news">
         <div class="latestNews"><h3 class="newstitle">Regenradar</h3><p class="newstext" id="regenradar"></p></div>
-      </div>
-      
-      <div id="news">
         <div class="latestNews"><h3 class="newstitle">Aktuelles Wetter</h3><p class="newstext" id="wetter"></p></div>
       </div>
       <!-- <img id="regenradar" src="http://www.wetteronline.de/?pid=p_radar_map&ireq=true&src=radar/vermarktung/p_radar_map_forecast/forecastLoop/NRW/latestForecastLoop.gif"> -->
@@ -27,11 +24,11 @@
     
     <div id="footer">
       <div id="praesiGeoloek" class="praesidienst">
-        Pr&auml;senzdienste GeoL&ouml;k:
+        <h3>Pr&auml;senzdienste GeoL&ouml;k:</h3>
         <?php include("php/praesidienste-geoloek.php"); ?>
       </div>
       <div id="praesiGeofs" class="praesidienst">
-        Pr&auml;senzdienste GI:
+        <h3>Pr&auml;senzdienste GI:</h3>
         <?php include("php/praesidienste-geofs.php"); ?>
       </div>
     </div>

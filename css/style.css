@@ -35,7 +35,7 @@ body {
 
 #plakate {
   height:100%;
-  width:33vw!important;
+  width:35vw!important;
   flex:none;
 }
 
@@ -51,12 +51,17 @@ body {
 
 #footer {
   flex:none;
+  display:flex;
   z-index:10;
   background-color:#fefefe;
 }
 
 #main {
   flex:1;
+  column-count:2;
+  -moz-column-count:2;
+  -webkit-column-count:2;
+  overflow:hidden;
 }
 
 .fslogo {
@@ -93,10 +98,18 @@ p {
 }
 
 .latestNews {
-  width:45%;
+  width:30vw;
   margin:2%;
-  float:left;
   border:3px solid #8cc63f;
+  -webkit-column-break-inside:avoid;
+  -moz-column-break-inside:avoid;
+  -ms-column-break-inside:avoid;
+  -o-column-break-inside:avoid;
+  column-break-inside:avoid;
+}
+
+.latestNews:first-child {
+  margin-top:0;
 }
 
 .newstitle {
@@ -241,45 +254,28 @@ p {
   object-position:0 -360px!important;
 }
 
-.praesidienst {
-	position: absolute;
-	bottom: 0;
-	/*max-width: 417px;*/
-	/*max-width: 550px;*/
-	max-height: 33vh;
-	overflow: hidden;
-	margin: 10px;
+.praesidienst {  
+  max-height:30vh;
+  font-size:8pt;
+  flex:1;
+  margin:0px 10px;
 }
 
 .praesidienst table {
-	table-layout: auto;
-	height: 250px;
-	font-size: 11px;
 	border: 1px solid grey;
 	border-collapse: collapse;
 }
 
-.praesidienst table td, .praesidienst table th { 
-	border-left: 1px solid grey;
-	border-top: 1px solid grey;
+.praesidienst th,
+.praesidienst td {
+  border: 1px solid grey;
+  width:16%;
 }
 
-.praesidienst table td:first-child {
-	border-left: none;
-}
-
-.praesidienst th {
-	width: 45px;
-	/*border: 1px solid black;*/
-}
-
-#praesiGeoloek {
-	left:0;
-}
-
-#praesiGeofs {
-	right: 0px;
-	text-align: left;
+.praesidienst h3 {
+  font-size:12pt;
+  font-weight:bold;
+  margin:0;
 }
 
 /*.plakate {

@@ -1,6 +1,12 @@
 <?php
+  // code example: http://www.jeroenvanwissen.nl/weblog/php/howto-generate-animated-gif-with-php
   header ('Content-type:image/gif');
+  // class from here: http://www.phpclasses.org/browse/package/3163.html
+  // deep download link: http://www.phpclasses.org/browse/download/zip/package/3163/name/gifmerge-2007-09-25.zip
   include('GIFEncoder.class.php');
+  
+  // wetteronline.de refuses to respond when no user agent is transmitted
+  // http://stackoverflow.com/questions/2107759/php-file-get-contents-and-headers
   $options = array('http'=>array('method'=>"GET", 'header'=>"User-Agent: geofsdisplay v1.0\r\n"));
   $context = stream_context_create($options);
   
