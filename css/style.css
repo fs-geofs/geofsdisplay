@@ -1,8 +1,10 @@
+/* FONTS */
 @font-face {
 	font-family: geofsFont;
 	src: url(fonts/HelveticaNeueLight.woff);
 }
 
+/* BASICS */
 html {
 	overflow: hidden;
 }
@@ -12,268 +14,244 @@ body {
 	margin: 0;
 	background-color: #fefefe;
 	color: #151515;
-	font-family: geofsFont;
+	font-family: geofsFont,sans-serif;
 	font-size: 20px;
 }
 
 #container {
-    display:flex;
-    height:100vh;
+	display:flex;
+	height:100vh;
 }
 
+/* LAYOUT DIVS */
 #content {
-	/*width: /*1156px;*/
-  /*width:100%;
-	position: absolute;*/
+	flex:1;
 	height: 100%;
-	/*left: 0;*/
-  flex:1;
-  position:relative;
-  display:flex;
-  flex-direction:column;
+	position:relative;
+	display:flex;
+	flex-direction:column;
 }
 
 #plakate {
-  height:100%;
-  width:35vw!important;
-  flex:none;
+	flex:none;
+	height:100%;
+	width:35vw!important;
 }
 
 #plakate img {
 	height: 100%;
 }
 
+/* SUBDIVISIONS OF CONTENT */
 #header {
-	margin: 5px;
-  display:flex;
-  flex:none;
-}
-
-#footer {
-  flex:none;
-  display:flex;
-  z-index:10;
-  background-color:#fefefe;
+	flex:none;
+	margin:5px;
+	display:flex;
 }
 
 #main {
-  flex:1;
-  column-count:2;
-  -moz-column-count:2;
-  -webkit-column-count:2;
-  overflow:hidden;
+	flex:1;
+	column-count:2;
+	-moz-column-count:2;
+	-webkit-column-count:2;
+	overflow:hidden;
 }
 
+#footer {
+	flex:none;
+	z-index:10;
+	background-color:#fefefe;
+	display:flex;
+}
+
+/* HEADER */
 .fslogo {
-  height:100px;
-}
-
-#geofspacman {
-  /*position: absolute;
-  left:200px;*/
-  flex:none;
-}
-
-#geoloekbaum {
-  /*position: absolute;
-  left: 0;*/
-  flex:none;
+	flex:none;
+	height:100px;
+	cursor:pointer;
 }
 
 #uhr {
-	/*position: absolute;
-	left: 500px;
-	top: 50px;*/
+	flex:none;
 	font-size: 70px;
-  flex:none;
 }
 
-#news {
-  /*column-count:2;
-  column-rule:solid;*/
-}
-
-p {
-  margin:0;
-}
-
-.latestNews {
-  width:30vw;
-  margin:2%;
-  border:3px solid #8cc63f;
-  -webkit-column-break-inside:avoid;
-  -moz-column-break-inside:avoid;
-  -ms-column-break-inside:avoid;
-  -o-column-break-inside:avoid;
-  column-break-inside:avoid;
-}
-
-.latestNews:first-child {
-  margin-top:0;
-}
-
-.newstitle {
-	padding: 5px;
-  margin:0;
-	background-color: #8cc63f;
-	color: #eeeeee;
-	padding-left: 10px;
-	font-size: 16pt;
-}
-
-.newstext {
-	padding: 5px;
-	color: midnightblue;
-	padding-bottom: 10px;
-	padding-left: 25px;
-	font-size: 12pt;
-}
-
-#news div:first-child table {
-  hyphens:auto;
-  font-size:12pt;
-  border-width:0;
-}
-
-#news div:first-child table th {
-  vertical-align:top;
-  text-align:left;
-}
-
+/* FAHRPLAN */
 #fahrplan {
 	flex:1;
-  /*position: absolute;
-	height: auto;
-	width: 400px;
-	left: 378px;
-	top: 0px;*/
-  position:relative;
+	position:relative;
 	color: #fefefe;
 	background-color: #fefefe;
 	overflow: hidden;
 	margin: 5px;
 	font-size: 0px;
-  display:flex;
+	display:flex;
 }
 
 #fahrplan img {
-  flex:auto;
-  display:none;
+	flex:auto;
+	display:none;
 }
 
-#einwaerts, #auswaerts {
-  flex:1;
-  margin:5px;
+#einwaerts,
+#auswaerts {
+	flex:1;
+	margin:5px;
 }
 
-#einwaerts span, #auswaerts span {
-  display:inline-block;
-  background-image:url('../images/busstop.png');
-  background-repeat:no-repeat;
-  background-size:contain;
-  margin-bottom:5px;
-  padding-left:35px!important;
-  
+#einwaerts span,
+#auswaerts span {
+	display:inline-block;
+	background-image:url('../images/busstop.png');
+	background-repeat:no-repeat;
+	background-size:contain;
+	margin-bottom:5px;
+	padding-left:35px!important;
 }
 
 #einwaerts span:after {
-  content: " (einwärts)";
+	content: " (einwärts)";
 }
 
 #auswaerts span:after {
-  content: " (auswärts)";
+	content: " (auswärts)";
 }
 
-#fahrplan .bgdark, #fahrplan .bgwith, ._center:after {
+.borden:before {
+	content:"Jetzt";
+}
+
+._center:after{
+	content:"Leider zu spät! Nachtbusse \A fahren an der Corrensstraße";
+	white-space:pre;  /* sonst wird das \A nicht wirklich als Zeilenumbruch dargestellt */
+	display:block;
+	padding:5px;
+	line-height:150%;
+	font-style:italic;
+	text-align:center;
+}
+
+#fahrplan .bgdark,
+#fahrplan .bgwith,
+#fahrplan ._center:after {
 	color: orange;
 	background-color: black;
 	padding-bottom: 5px;
 	font-size: 14px;
 }
 
-._center:after{
-  content:"Leider zu spät! Nachtbusse \A fahren an der Corrensstraße";
-  white-space:pre;  /* sonst wird das \A nicht wirklich als Zeilenumbruch dargestellt */
-  display:block;
-  padding:5px;
-  line-height:150%;
-  font-style:italic;
-  text-align:center;
+.bgwith,
+.bgdark {
+	display:flex;
 }
 
 .bgdark {
-  padding-top:5px;
-}
-
-.borden:before {
-  content:"Jetzt";
+	padding-top:5px;
 }
 
 #fahrplan .haltestellenlable {
+	padding: 2px;
 	text-align: left;
 	color: black;
-	padding: 2px;
 	font-size: 16px;
 }
 
-.bgwith, .bgdark {
-  display:flex;
-}
-
-
 #fahrplan .line {
-	/*
-  position: absolute;
-	left: 0;
-	padding: 5px;*/
-  flex:none;
-  min-width:30px;
-  text-align:right;
-  padding-right:15px;
+	flex:none;
+	min-width:30px;
+	padding-right:15px;
+	text-align:right;
 }
 
 #fahrplan .time {
-	/*position: absolute;
-	right: 0;
-	padding: 5px;*/
-  flex:none;
-  padding-right:10px;
+	flex:none;
+	padding-right:10px;
 }
 
 #fahrplan .direction {
-	/*position: absolute;
-	left: 34px;
-	padding: 5px;*/
-  flex:1;
+	flex:1;
 }
 
+/* NEWS */
+p {
+	margin:0;
+}
+
+.latestNews {
+	width:30vw;
+	margin:8px;
+	border:3px solid #8cc63f;
+	-webkit-column-break-inside:avoid;
+	-moz-column-break-inside:avoid;
+	-ms-column-break-inside:avoid;
+	-o-column-break-inside:avoid;
+	column-break-inside:avoid;
+}
+
+.latestNews:first-child {
+	margin-top:0;
+}
+
+.newstitle {
+	padding: 5px;
+	padding-left: 10px;
+	margin:0;
+	background-color: #8cc63f;
+	color: #eeeeee;
+	font-size: 16pt;
+}
+
+.newstext {
+	padding: 5px;
+	padding-left: 25px;
+	padding-bottom: 10px;
+	color: midnightblue;
+	font-size: 12pt;
+}
+
+/* MENSAPLAN TABLE */
+#news div:first-child table {
+	hyphens:auto;
+	font-size:12pt;
+	border-width:0;
+}
+
+#news div:first-child table th {
+	vertical-align:top;
+	text-align:left;
+}
+
+/* REGENRADAR */
 #regenradar {
-  margin-right:20px;
+	margin-right:20px;
 }
 
 #regenradar img {
-	/*width:340px;   /* dimensions of the wanted map crop */
-  width:100%;
-  /*height:225px;
-  object-fit:cover;   /* the above causes the image to distort - this repairs that */
-  /*object-position:0 0;*/  
+	width:100%;
+	/* for use with regenradar.php instead of regenradargif.php
+	
+	width:340px;   // dimensions of the wanted map crop
+	height:225px;
+	object-fit:cover;   // the above causes the image to distort - this repairs that 
+	object-position:0 0;
 }
 
 #regenradar img.preload {
-  display:none;
+	display:none;
 }
 
 #mapfooter {
-  /* "zoom" the image to the wetteronline footer */
-  height:20px!important;
-  object-position:0 -360px!important;
+	// "zoom" the image to the wetteronline footer
+	height:20px!important;
+	object-position:0 -360px!important; */
 }
 
-.praesidienst {  
-  max-height:30vh;
-  font-size:8pt;
-  flex:1;
-  margin:0px 10px;
+/* PRÄSIDIENST TABLES */
+.praesidienst {
+	flex:1;
+	max-height:30vh;
+	margin:0px 10px;
+	font-size:8pt;
 }
 
 .praesidienst table {
@@ -283,23 +261,12 @@ p {
 
 .praesidienst th,
 .praesidienst td {
-  border: 1px solid grey;
-  width:16%;
+	border: 1px solid grey;
+	width:16%;
 }
 
 .praesidienst h3 {
-  font-size:12pt;
-  font-weight:bold;
-  margin:0;
-}
-
-/*.plakate {
-	/*position: absolute;
-	height: 100%;
-	right: 0;*/
-  
-//}
-
-#mensaplan {
-	font-size: 20px;
+	margin:0;
+	font-size:12pt;
+	font-weight:bold;
 }
