@@ -152,7 +152,7 @@ p {
 	background-color: #fefefe;
 	overflow: hidden;
 	margin: 5px;
-	font-size: 2px;
+	font-size: 0px;
   display:flex;
 }
 
@@ -184,11 +184,21 @@ p {
   content: " (auswärts)";
 }
 
-#fahrplan .bgdark, #fahrplan .bgwith {
+#fahrplan .bgdark, #fahrplan .bgwith, ._center:after {
 	color: orange;
 	background-color: black;
 	padding-bottom: 5px;
 	font-size: 14px;
+}
+
+._center:after{
+  content:"Leider zu spät! Nachtbusse \A fahren an der Corrensstraße";
+  white-space:pre;  /* sonst wird das \A nicht wirklich als Zeilenumbruch dargestellt */
+  display:block;
+  padding:5px;
+  line-height:150%;
+  font-style:italic;
+  text-align:center;
 }
 
 .bgdark {
@@ -237,11 +247,16 @@ p {
   flex:1;
 }
 
+#regenradar {
+  margin-right:20px;
+}
+
 #regenradar img {
-	width:340px;   /* dimensions of the wanted map crop */
-  height:225px;
+	/*width:340px;   /* dimensions of the wanted map crop */
+  width:100%;
+  /*height:225px;
   object-fit:cover;   /* the above causes the image to distort - this repairs that */
-  object-position:0 0;  
+  /*object-position:0 0;*/  
 }
 
 #regenradar img.preload {
