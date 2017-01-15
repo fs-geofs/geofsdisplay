@@ -85,7 +85,7 @@ function refreshRegenradar() {
 function refreshRegenradarGif() {
   document.getElementById('regenradar').innerHTML = '<img src="php/regenradargif.php">';
   // refresh every 5 minutes
-  window.setTimeout(refreshRegenradar, 5*60*1000);
+  window.setTimeout(refreshRegenradarGif, 5*60*1000);
 }
 
 function cycleRegenradar() {
@@ -130,7 +130,7 @@ function setPlakat(index) {
   // once every cycle show a random cartoon.
   // if swiping through plakate, this wont happen
   if (index === plakate.length) {
-    document.getElementById("plakat").src = 'http://www.ruthe.de/cartoons/strip_' + getRandom(1940) + '.jpg';
+    document.getElementById("plakat").src = 'http://www.ruthe.de/cartoons/strip_' + getRandom(2010) + '.jpg';
     currentPlakat = -1;
   } else {
     var plakat = plakate[index]; // plakat filename
