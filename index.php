@@ -28,7 +28,7 @@
         <?php include("php/praesidienste-geoloek.php"); ?>
       </div>
       <div id="praesiGeofs" class="praesidienst">
-        <h3>Pr&auml;senzdienste GI:</h3>
+        <h3 ondblclick='EASTERbaconandEGGs()'>Pr&auml;senzdienste GI:</h3>
         <?php include("php/praesidienste-geofs.php"); ?>
       </div>
     </div>
