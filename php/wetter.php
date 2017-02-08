@@ -7,7 +7,7 @@
   }
   else
   { 
-    preg_match('~<table class="news_weather" summary="Aktuelles Wetter">.*Uhrzeit \(UTC\+[12]\)</th> <td>[\d\.]+ (\d\d:\d\d)</td>.*Temperatur</th> <td>(\d\.?\d?).*Luftfeuchte</th> <td>(\d\d).*Beaufort</span>: (\d\d?).*Windrichtung</th> <td>aus (\w\w?\w?).*Luftdruck</th> <td>(\d\d\d\d?\.?\d?).*</table>~si', $input, $wetterdaten);
+    preg_match('~<table class="news_weather" summary="Aktuelles Wetter">.*Lokalzeit</th> <td>(\d\d:\d\d)</td>.*Temperatur</th> <td>(-?\d?\d\.?\d?).*Luftfeuchte</th> <td>(\d\d).*Beaufort</span>: (\d\d?).*Windrichtung</th> <td>aus (\w\w?\w?).*Luftdruck</th> <td>(\d\d\d\d?\.?\d?).*</table>~si', $input, $wetterdaten);
     
     $uhrzeit      = $wetterdaten[1];
     $temperatur   = $wetterdaten[2];

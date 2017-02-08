@@ -50,8 +50,6 @@
     
     $mensaplan = "<table><tr>" . implode('</tr><tr>', $meals) . "</tr></table>";
   }
+  
+  echo $mensaplan;
 ?>
-
-<script>
-  addNews("Heute in der Mensa am Ring:", "<?php echo addslashes($mensaplan); ?>");
-</script>  

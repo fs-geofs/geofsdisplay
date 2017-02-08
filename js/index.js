@@ -28,10 +28,11 @@ function addNews(title, text) {
 function ladeNews() {
   //auskommentiert um Regenradar nicht zu überschreiben
   //document.getElementById("news").innerHTML = '';
-  for (var i = news.length - 1; i >= 0; i--) {
-    document.getElementById("news").innerHTML = '<div class="latestNews"><h3 class="newstitle">' + news[i].title +
-      '</h3>' + (news[i].text!='' ? '<p class="newstext">' + news[i].text + '</p>' : '') + '</div>' + document.getElementById("news").innerHTML;
-  }
+  news.forEach(function(element, index, array) {
+    document.getElementById("news").innerHTML +=
+      '<div class="latestNews"><h3 class="newstitle">' + element.title + '</h3>'
+      + (element.text=='' ? '' : '<p class="newstext">' + element.text + '</p>') + '</div>';
+  });
 }
 
 // update the clock
@@ -63,6 +64,16 @@ function ladeFahrplan() {
     type: 'GET',
     success: function(responseText) {$('#fahrplan').html(responseText); },
     error: function(responseText) { console.error("could not get fahrplan.php"); }
+  });
+  window.setTimeout(ladeFahrplan, 15000);
+}
+
+function ladeMensa() {
+  $.ajax({
+    url: 'php/mensaplaene.php',
+    type: 'GET',
+    success: function(responseText) {$('#mensa').html(responseText); },
+    error: function(responseText) { console.error("could not get mensaplaene.php"); }
   });
   window.setTimeout(ladeFahrplan, 15000);
 }
@@ -168,9 +179,10 @@ function init() {
   currentHour = new Date().getHours();
 
   setPlakat(0);
-  ladeNews();
   updateClock();
+  ladeNews();
   ladeFahrplan();
+  ladeMensa();
   //refreshRegenradar();
   refreshRegenradarGif();
   refreshWetter();

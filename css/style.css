@@ -35,7 +35,7 @@ body {
 #plakate {
 	flex:none;
 	height:100%;
-	width:35vw!important;
+	width:40vw!important;
 }
 
 #plakate img {
@@ -178,7 +178,7 @@ p {
 }
 
 .latestNews {
-	width:30vw;
+	width:28vw;
 	margin:8px;
 	border:3px solid #8cc63f;
 	-webkit-column-break-inside:avoid;
@@ -205,18 +205,18 @@ p {
 	padding: 5px;
 	padding-left: 25px;
 	padding-bottom: 10px;
-	color: midnightblue;
+	color: black;
 	font-size: 12pt;
 }
 
 /* MENSAPLAN TABLE */
-#news div:first-child table {
+#news #mensa table {
 	hyphens:auto;
 	font-size:12pt;
 	border-width:0;
 }
 
-#news div:first-child table th {
+#news #mensa table th {
 	vertical-align:top;
 	text-align:left;
 }
