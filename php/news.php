@@ -22,12 +22,8 @@ foreach ($alledateien as $datei) {
     // nur Dateien mit txt extension zulassen
     if (in_array($dateiinfo['extension'], $fileExts)) {
 
-        $newstext = implode(file($ordner."/".$datei, FILE_IGNORE_NEW_LINES), "<br>");
-        ?>
-        <script type="text/javascript">
-        	addNews("<?php echo $dateiinfo['filename']; ?>", "<?php echo $newstext ?>");
-        </script>
-        <?php
+        $newstext = str_replace("'", "&apos;", implode(file($ordner."/".$datei, FILE_IGNORE_NEW_LINES), "<br>"));
+        echo "addNews('$dateiinfo[filename]', '$newstext');\n";
     };
  };
 ?>

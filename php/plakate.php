@@ -20,11 +20,7 @@ foreach ($alledateien as $datei) {
 
     // nur Dateien mit jpg jpeg png webp und gif extension zulassen
     if (in_array($dateiinfo['extension'], array('jpg','jpeg','png', 'webp', 'gif')) == 1 ) {
-    ?>
-	<script type="text/javascript">
-		addPlakate("<?php echo (string)$dateiinfo['basename']; ?>");
-	</script>
-<?php
+		  echo "addPlakate('$dateiinfo[basename]');\n";
     };
  };
 ?>

@@ -3,10 +3,15 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <link rel="stylesheet" type="text/css" href="css/style.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="./js/hammerjs-v2.0.6.min.js"></script>
+  <script src="./js/index.js"></script>
 </head>
 <body>
 <div id="container">
+  
   <div id="content">
+  
     <div id="header">
       <img src="images/geofspacman.png" id="geofspacman" class="fslogo" onclick="window.location.reload()">
       <img src="images/geoloek.png" id="geoloekbaum" class="fslogo" onclick="window.location.reload()">
@@ -40,22 +45,19 @@
       </div>
     </div>
   
-  </div>
+  </div>  <!-- #content -->
+  
   <div id="plakate">
     <img id="plakat" class="plakate" src="images/geofspacman.png" draggable="false" onmousedown="if (event.preventDefault) event.preventDefault()"></img>
   </div>
-</div>
-
-  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-  <script type="text/javascript" src="./js/hammerjs-v2.0.6.min.js"></script>
-  <script type="text/javascript" src="./js/index.js"></script>
-
-  <?php
-    include("php/plakate.php");
-    include("php/news.php");
-  ?>
-
+  
+</div>  <!-- #container -->
+    
   <script type="text/javascript">
+    <?php
+      include("php/plakate.php");
+      include("php/news.php");
+    ?>
     init();
   </script>
 </body>
