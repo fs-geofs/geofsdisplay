@@ -6,14 +6,16 @@
 
 # depends on (ubuntu)packages 'inotify-tools' and 'imagemagick'
 
-watchdir="$(pwd)/displaycontent/plakate"
-targetresolution='746x'
+# use $DIRECTORY and $RESOLUTION if available, else defaults
+watchdir=${DIRECTORY:-"$(pwd)/displaycontent/plakate"}
+targetresolution=${RESOLUTION:-'746x'}
 imgpattern='\.(png|jpg|jpeg|gif)$'
 
 echo "watching $watchdir"
 
-inotifywait -m -e CREATE $watchdir --format '%f' |
+inotifywait -m -e CREATE,MOVE $watchdir --format '%f' |
   while read filename; do
+    
     echo "'$filename' created!"
     filepath=${watchdir}/${filename}
     filenoext=${filename%.*}
@@ -43,4 +45,5 @@ inotifywait -m -e CREATE $watchdir --format '%f' |
     else
       echo "no match for '$filename'"
     fi
+
   done

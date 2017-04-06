@@ -3,9 +3,16 @@ Description=geofsdisplay autoresize script for display content
 
 [Service]
 WorkingDirectory=/var/www/geofsdisplay
-Type=forking
-ExecStart=/bin/bash autoresize.sh
-KillMode=process
+Type=simple
+ExecStart=/bin/bash ./autoresize.sh
+ExecReload=/bin/kill -HUP $MAINPID
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=geofsdisplay-autoresize
+User=www-data
+Group=www-data
+Environment='DIRECTORY=/var/www/geofsdisplay/displaycontent/plakate'
+Environment='RESOLUTION=746x'
 
 [Install]
 WantedBy=multi-user.target
