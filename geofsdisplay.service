@@ -1,0 +1,12 @@
+[Unit]
+Description=geofsdisplay autoresize script for display content
+
+[Service]
+WorkingDirectory=/var/www/geofsdisplay
+Type=forking
+ExecStart=/bin/bash autoresize.sh
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
+
