@@ -36,7 +36,7 @@
     
     <div id="footer">
       <div id="praesiGeoloek" class="praesidienst">
-        <h3>Pr&auml;senzdienste GeoL&ouml;k:</h3>
+        <h3 ondblclick='EASTERzwiebelandGEEK()'>Pr&auml;senzdienste GeoL&ouml;k:</h3>
         <?php include("php/praesidienste-geoloek.php"); ?>
       </div>
       <div id="praesiGeofs" class="praesidienst">
