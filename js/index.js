@@ -126,8 +126,6 @@ function refreshWetter() {
   window.setTimeout(refreshWetter, 10*60*1000);
 }
 
-//////////////////////////////////////////7
-
 // returns a random int as string with leading zeros (for ruthe comic IDs)
 function getRandom(max) {
   var rnd = Math.floor(Math.random()*max)+1;
@@ -140,19 +138,31 @@ function getRandom(max) {
 function setPlakat(index) {
   if (plakatTimeout) clearTimeout(plakatTimeout);
   
-  var duration = 10;
-  // once every cycle show a random cartoon.
-  // if swiping through plakate, this wont happen
+  // at the end of every cycle show a random cartoon
+  var url, duration;
   if (index === plakate.length) {
-    document.getElementById("plakat").src = 'http://ruthe.de/cartoons/strip_' + getRandom(2010) + '.jpg';
+    url = 'http://ruthe.de/cartoons/strip_' + getRandom(2036) + '.jpg';
     currentPlakat = -1;
+    duration = 5;
   } else {
-    var plakat = plakate[index]; // plakat filename
-    document.getElementById("plakat").src = 'displaycontent/plakate/' + plakat;
-    duration = getDuration(plakat);
-    console.log(index + '/' + (plakate.length-1) + ': ' + plakat);
+    url = 'displaycontent/plakate/' + plakate[index];
+    duration = getDuration(plakate[index]);
   }
+  
+  document.getElementById("plakat").src = url;
+  
+  //console.log(index + '/' + (plakate.length-1) + ': ' + plakate[index]);
+  
+  var balken = document.getElementById("plakatbalken");
+  balken.style.transition = "";
+  balken.style.width = "0";
+  // this has to happen a little later to actually cause rendering
+  setTimeout(function(){
+    balken.style.transition = "width " + (duration-0.5) + "s linear";
+    balken.style.width = "100%";
+  }, 100);
 
+  // schedule next plakat
   plakatTimeout = window.setTimeout(nextPlakat, duration*1000);
 
   // returns the displaytime assigned to a plakat. defaults to 10 if none is found in the name

@@ -48,7 +48,8 @@
   </div>  <!-- #content -->
   
   <div id="plakate">
-    <img id="plakat" class="plakate" src="images/geofspacman.png" draggable="false" onmousedown="if (event.preventDefault) event.preventDefault()"></img>
+    <hr id="plakatbalken"/>
+    <img id="plakat" class="plakate" src="images/geofspacman.png" draggable="false" onmousedown="if (event.preventDefault) event.preventDefault()" />
   </div>
   
 </div>  <!-- #container -->
