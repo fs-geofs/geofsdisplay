@@ -1,4 +1,4 @@
-function ladeMensa() {
+function loadMensa() {
   $.ajax({
     url: 'php/mensaplaene.php',
     type: 'GET',

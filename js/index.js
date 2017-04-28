@@ -1,38 +1,37 @@
-var xmlHttp = new XMLHttpRequest(),
-  plakate = [],
+var plakate = [],
   news = [],
   currentHour = 0,
   currentPlakat = 0,
-  currentRegenradar = 0,
-  regenradarTimeout = null,
   plakatTimeout = null,
   plakatTouchHandler = null;
+  // not needed when using regenradar via GIF method
+  //currentRegenradar = 0,
+  //regenradarTimeout = null,
 
-// resets currently loaded news + plakate, rescans the directories, and loads all files
-function reloadDisplaycontent() {
-  /*plakate = [];
-  news = [];
-  xmlHttp.open('GET', 'php/plakate.php', true);
-  xmlHttp.open('GET', 'php/news.php', true);
-  showNews();*/
+// updates display content that changes rarely (rescans the plakate and news directories and refreshes mensaplan)
+function reloadDisplayContent() {
+  loadPlakate();
+  loadNews();
+  loadMensa();
 }
 
-// update the clock
-// every full hour refetch dispaycontent
 function updateClock() {
+  // update the clock
   var time = new Date(),
     hours = leadingChar("&nbsp;", time.getHours()),
     minutes = leadingChar("0", time.getMinutes()),
     msecondsuntilrefresh = (60-time.getSeconds())*1000;
-
-  if (time.getHours() != currentHour) {
-    currentHour = time.getHours();
-    reloadDisplaycontent();
-  }
-
+    
   document.getElementById("uhr").innerHTML = hours + ":" + minutes;
   window.setTimeout(updateClock, msecondsuntilrefresh);
 
+  // every full hour reload rarely changing display content
+  if (time.getHours() != currentHour) {
+    currentHour = time.getHours();
+    reloadDisplayContent();
+  }
+
+  // helper
   function leadingChar(char, int) {
     var result = int;
     if (int < 10) result = char + int;
@@ -43,9 +42,9 @@ function updateClock() {
 function init() {
   currentHour = new Date().getHours();
   updateClock();
-  showNews();
-  showPlakate();
-  ladeMensa();
+  loadNews();
+  loadPlakate();
+  loadMensa();
   refreshFahrplan();
   refreshWetter();
   refreshRegenradarGif();

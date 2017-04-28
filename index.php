@@ -58,12 +58,8 @@
   
 </div>  <!-- #container -->
     
-  <script type="text/javascript">
-    <?php
-      include("php/plakate.php");
-      include("php/news.php");
-    ?>
-    init();
-  </script>
+<script type="text/javascript">
+  init();
+</script>
 </body>
 </html>
