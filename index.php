@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>geofsdisplay</title>
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
+  <meta name="viewport" content="width=device-width; initial-scale=1.0;" />  
   <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script src="./js/hammerjs-v2.0.6.min.js"></script>
   <script src="./js/index.js"></script>
