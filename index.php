@@ -6,6 +6,10 @@
   <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script src="./js/hammerjs-v2.0.6.min.js"></script>
   <script src="./js/index.js"></script>
+  <script src="./js/displaycontent.js"></script>
+  <script src="./js/ajaxcontent.js"></script>
+  <script src="./js/plakate.js"></script>
+  <script src="./js/eastereggs.js"></script>  
 </head>
 <body>
 <div id="container">
