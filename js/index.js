@@ -6,7 +6,7 @@ var xmlHttp = new XMLHttpRequest(),
   currentRegenradar = 0,
   regenradarTimeout = null,
   plakatTimeout = null,
-  plakatTouch = new Hammer(document.getElementById('plakat'));
+  plakatTouchHandler = null;
 
 // resets currently loaded news + plakate, rescans the directories, and loads all files
 function reloadDisplaycontent() {
@@ -138,6 +138,8 @@ function getRandom(max) {
 }
 
 function setPlakat(index) {
+  if (plakatTimeout) clearTimeout(plakatTimeout);
+  
   var duration = 10;
   // once every cycle show a random cartoon.
   // if swiping through plakate, this wont happen
@@ -151,9 +153,7 @@ function setPlakat(index) {
     console.log(index + '/' + (plakate.length-1) + ': ' + plakat);
   }
 
-  plakatTimeout = window.setTimeout(function() {
-    setPlakat(++currentPlakat);
-  }, (duration * 1000));
+  plakatTimeout = window.setTimeout(nextPlakat, duration*1000);
 
   // returns the displaytime assigned to a plakat. defaults to 10 if none is found in the name
   function getDuration(filename){
@@ -163,16 +163,22 @@ function setPlakat(index) {
   }
 }
 
+function nextPlakat() {
+  currentPlakat++;
+  setPlakat(currentPlakat);
+}
+
+function prevPlakat() {
+  currentPlakat--;
+  if(currentPlakat == -1) currentPlakat = plakate.length-1;
+  setPlakat(currentPlakat);
+}
+
 // register swipe gestures on plakateFrame
-plakatTouch.on('swiperight', function(e) {
-  if (--currentPlakat < 0) currentPlakat = plakate.length - 1;
-  if (plakatTimeout) clearTimeout(plakatTimeout);
-  setPlakat(currentPlakat);
-});
-plakatTouch.on('swipeleft', function(e) {
-  if (++currentPlakat > plakate.length - 1) currentPlakat = 0;
-  if (plakatTimeout) clearTimeout(plakatTimeout);
-  setPlakat(currentPlakat);
+$(document).ready(function() {
+  plakatTouchHandler = new Hammer(document.getElementById('plakat'));
+  plakatTouchHandler.on('swiperight', prevPlakat);
+  plakatTouchHandler.on('swipeleft',  nextPlakat);
 });
 
 function init() {
