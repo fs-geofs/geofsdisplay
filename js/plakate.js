@@ -14,17 +14,17 @@ function setPlakat(index) {
   var url, duration;
   if (index === plakate.length) {
     url = 'http://ruthe.de/cartoons/strip_' + getRandom(2036) + '.jpg';
-    currentPlakat = -1;
     duration = 5;
+    currentPlakat = -1;
   } else {
+    // otherwise use filename from plakate array
     url = 'displaycontent/plakate/' + plakate[index];
     duration = getDuration(plakate[index]);
   }
   
   document.getElementById("plakat").src = url;
   
-  //console.log(index + '/' + (plakate.length-1) + ': ' + plakate[index]);
-  
+  // display bar that goes across the screen in approx. the time the plakat is supposed to be displayed
   var balken = document.getElementById("plakatbalken");
   balken.style.transition = "";
   balken.style.width = "0";
@@ -37,7 +37,7 @@ function setPlakat(index) {
   // schedule next plakat
   plakatTimeout = window.setTimeout(nextPlakat, duration*1000);
 
-  // returns the displaytime assigned to a plakat. defaults to 10 if none is found in the name
+  // returns the duration assigned to a plakat via the filename. defaults to 10 if none is found in the name.
   function getDuration(filename){
     var duration = parseFloat(filename.split('-')[1]);
     if (isNaN(duration)) duration = 10;
@@ -52,11 +52,11 @@ function nextPlakat() {
 
 function prevPlakat() {
   currentPlakat--;
-  if(currentPlakat == -1) currentPlakat = plakate.length-1;
+  if(currentPlakat <= -1) currentPlakat = plakate.length-1;  // currentPlakat might be as low as -2 (happens when swiping back while on cartoon)
   setPlakat(currentPlakat);
 }
 
-// register swipe gestures on plakateFrame
+// register swipe gestures on <img id="plakat"> element
 $(document).ready(function() {
   plakatTouchHandler = new Hammer(document.getElementById('plakat'));
   plakatTouchHandler.on('swiperight', prevPlakat);

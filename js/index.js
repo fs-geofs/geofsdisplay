@@ -14,7 +14,7 @@ function reloadDisplaycontent() {
   news = [];
   xmlHttp.open('GET', 'php/plakate.php', true);
   xmlHttp.open('GET', 'php/news.php', true);
-  ladeNews();*/
+  showNews();*/
 }
 
 // update the clock
@@ -42,13 +42,11 @@ function updateClock() {
 
 function init() {
   currentHour = new Date().getHours();
-
-  setPlakat(0);
   updateClock();
-  ladeNews();
-  ladeFahrplan();
+  showNews();
+  showPlakate();
   ladeMensa();
-  //refreshRegenradar();
-  refreshRegenradarGif();
+  refreshFahrplan();
   refreshWetter();
+  refreshRegenradarGif();
 }
