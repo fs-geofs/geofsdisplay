@@ -34,7 +34,7 @@
         </div>
         <div class="latestNews">
           <h3 class="newstitle">Heute in der Mensa am Ring:</h3>
-          <p class="newstext" id="mensa"></p>
+          <div class="newstext" id="mensa"></div>
         </div>
       </div>
       <!-- <img id="regenradar" src="http://www.wetteronline.de/?pid=p_radar_map&ireq=true&src=radar/vermarktung/p_radar_map_forecast/forecastLoop/NRW/latestForecastLoop.gif"> -->
