@@ -1,8 +1,10 @@
+/* FONTS */
 @font-face {
 	font-family: geofsFont;
 	src: url(fonts/HelveticaNeueLight.woff);
 }
 
+/* BASICS */
 html {
 	overflow: hidden;
 }
@@ -12,163 +14,305 @@ body {
 	margin: 0;
 	background-color: #fefefe;
 	color: #151515;
-	font-family: geofsFont;
+	font-family: geofsFont,sans-serif;
 	font-size: 20px;
 }
 
-.header {
-	margin: 5px;
+/* DISPLAY AND DESKTOP ONLY (NOT ON MOBILE) */
+@media only screen and (min-device-width: 481px) {
+  #container {
+  	display:flex;
+  	height:100vh;
+  }
+  
+  /* LAYOUT DIVS */
+  #content {
+  	flex:1;
+  	height: 100%;
+  	position:relative;
+  	display:flex;
+  	flex-direction:column;
+  }
+  
+  #plakate {
+  	flex:none;
+  	height:100%;
+  	width:40vw!important;
+  }
+  
+  #plakate img {
+  	height: 100%;
+  }
 }
 
-#content {
-	width: 1156px;
-	position: absolute;
-	height: 100%;
-	left: 0;
+/* MOBILE */
+@media only screen and (max-device-width: 480px) {
+  #plakate img {
+  	width: 100%;
+  }
 }
 
-.content img {
-	height: 100%;
+#plakate hr {
+  margin: 0;
+  padding: 0;
+  width: 0;
+  height: 5px;
+  background-color: #8cc63f;
+}
+
+/* DISPLAY AND DESKTOP ONLY (NOT ON MOBILE) */
+@media only screen and (min-device-width: 481px) {
+  /* SUBDIVISIONS OF CONTENT */
+  #header {
+  	flex:none;
+  	margin:5px;
+  	display:flex;
+  }
+  
+  #main {
+  	flex:1;
+  	column-count:2;
+  	-moz-column-count:2;
+  	-webkit-column-count:2;
+  	overflow:hidden;
+  }
+  
+  #footer {
+  	flex:none;
+  	z-index:10;
+  	background-color:#fefefe;
+  	display:flex;
+  }
+}
+
+/* HEADER */
+.fslogo {
+	flex:none;
+	height:100px;
+	cursor:pointer;
 }
 
 #uhr {
-	position: absolute;
-	left: 500px;
-	top: 50px;
-	font-size: 65px;
+	flex:none;
+	font-size: 70px;
 }
 
-#news {
-	position: absolute;
-	top: 400px;
-	height: 370px;
-	width: 1136px;
-	overflow: hidden;
-	padding: 10px;
-}
-
-.newstitle {
-	padding: 5px;
-	background-color: midnightblue;
-	color: #eeeeee;
-	padding-left: 10px;
-	font-size: 35px;
-}
-
-.newstext {
-	padding: 5px;
-	color: midnightblue;
-	padding-bottom: 10px;
-	padding-left: 25px;
-	font-size: 30px;
-}
-
+/* FAHRPLAN */
 #fahrplan {
-	position: absolute;
-	height: auto;
-	width: 400px;
-	left: 378px;
-	top: 150px;
 	color: #fefefe;
 	background-color: #fefefe;
 	overflow: hidden;
 	margin: 5px;
-	font-size: 2px;
+	font-size: 0px;
 }
-#fahrplan .bgdark{
-	color: orange;
-	background-color: black;
-	padding-bottom: 5px;
-	font-size: 24px;
+  
+/* DISPLAY AND DESKTOP ONLY (NOT ON MOBILE) */
+@media only screen and (min-device-width: 481px) {
+  #fahrplan {
+  	flex:1;
+  	position:relative;
+    display:flex;
+  }
+  
+  #einwaerts,
+  #auswaerts {
+  	flex:1;
+  	margin:5px;
+  }
 }
 
-#fahrplan .bgwith{
+#einwaerts span,
+#auswaerts span {
+	display:inline-block;
+	background-image:url('../images/busstop.png');
+	background-repeat:no-repeat;
+	background-size:contain;
+	margin-bottom:5px;
+	padding-left:35px!important;
+}
+
+#einwaerts span:after {
+	content: " (einwärts)";
+}
+
+#auswaerts span:after {
+	content: " (auswärts)";
+}
+
+.borden:before {
+	content:"Jetzt";
+}
+
+._center:after{
+	content:"Leider zu spät! Nachtbusse \A fahren an der Corrensstraße";
+	white-space:pre;  /* sonst wird das \A nicht wirklich als Zeilenumbruch dargestellt */
+	display:block;
+	padding:5px;
+	line-height:150%;
+	font-style:italic;
+	text-align:center;
+}
+
+#fahrplan .bgdark,
+#fahrplan .bgwith,
+#fahrplan ._center:after {
 	color: orange;
 	background-color: black;
 	padding-bottom: 5px;
-	font-size: 24px;
+	font-size: 14px;
+}
+
+.bgwith,
+.bgdark {
+	display:flex;
+}
+
+.bgdark {
+	padding-top:5px;
 }
 
 #fahrplan .haltestellenlable {
+	padding: 2px;
 	text-align: left;
 	color: black;
-	padding: 2px;
-	font-size: 28px;
+	font-size: 16px;
 }
 
 #fahrplan .line {
-	position: absolute;
-	left: 0;
-	padding: 5px;
+	flex:none;
+	min-width:30px;
+	padding-right:15px;
+	text-align:right;
 }
 
 #fahrplan .time {
-	position: absolute;
-	right: 0;
-	padding: 5px;
+	flex:none;
+	padding-right:10px;
 }
 
 #fahrplan .direction {
-	position: absolute;
-	left: 34px;
+	flex:1;
+}
+
+/* NEWS */
+p {
+	margin:0;
+}
+
+/* DISPLAY AND DESKTOP ONLY (NOT ON MOBILE) */
+@media only screen and (min-device-width: 481px) {
+  .latestNews {
+	  width:28vw;
+  }
+}
+
+.latestNews {
+	margin:8px;
+	border:3px solid #8cc63f;
+	-webkit-column-break-inside:avoid;
+	-moz-column-break-inside:avoid;
+	-ms-column-break-inside:avoid;
+	-o-column-break-inside:avoid;
+	column-break-inside:avoid;
+}
+
+.latestNews:first-child {
+	margin-top:0;
+}
+
+.newstitle {
 	padding: 5px;
+	padding-left: 10px;
+	margin:0;
+	background-color: #8cc63f;
+	color: #eeeeee;
+	font-size: 16pt;
 }
 
+.newstext {
+	padding: 5px;
+	padding-left: 25px;
+	padding-bottom: 10px;
+	color: black;
+	font-size: 12pt;
+}
+
+/* MENSAPLAN TABLE */
+#news #mensa table {
+	hyphens:auto;
+	font-size:12pt;
+	border-width:0;
+}
+
+#news #mensa table th {
+	vertical-align:top;
+	text-align:left;
+}
+
+/* REGENRADAR */
 #regenradar {
-	position: absolute;
-	bottom: -50px;
-	left: 425px;
-	height: 330px;
-	width: auto;
+	margin-right:20px;
 }
 
-.praesidienst {
-	position: absolute;
-	bottom: 0;
-	/*max-width: 417px;*/
-	max-width: 550px;
-	max-height: 300px;
-	overflow: hidden;
-	margin: 10px;
+#regenradar img {
+	width:100%;
+	/* for use with regenradar.php instead of regenradargif.php
+	
+	width:340px;   // dimensions of the wanted map crop
+	height:225px;
+	object-fit:cover;   // the above causes the image to distort - this repairs that 
+	object-position:0 0;
+}
+
+#regenradar img.preload {
+	display:none;
+}
+
+#mapfooter {
+	// "zoom" the image to the wetteronline footer
+	height:20px!important;
+	object-position:0 -360px!important; */
+}
+
+/* PRÄSIDIENST TABLES */
+/* DISPLAY AND DESKTOP ONLY (NOT ON MOBILE) */
+@media only screen and (min-device-width: 481px) {
+  .praesidienst {
+    flex:1;
+    max-height:30vh;
+    margin:0px 10px;
+    font-size:8pt;
+  }
+}
+
+/* MOBILE */
+@media only screen and (max-device-width: 480px) {
+  .praesidienst {
+  	font-size:6pt;
+    max-width:100vw;
+  }
 }
 
 .praesidienst table {
-	table-layout: auto;
-	height: 250px;
-	font-size: 11px;
 	border: 1px solid grey;
 	border-collapse: collapse;
 }
 
-.praesidienst table td, th { 
-	border-left: 1px solid grey;
-	border-top: 1px solid grey;
+.praesidienst th,
+.praesidienst td {
+	border: 1px solid grey;
 }
 
-.praesidienst table td:first-child {
-	border-left: none;
+/* DISPLAY AND DESKTOP ONLY (NOT ON MOBILE) */
+@media only screen and (min-device-width: 481px) {
+  .praesidienst th,
+  .praesidienst td {
+  	width:16%;
+  }
 }
 
-.praesidienst th {
-	width: 45px;
-	/*border: 1px solid black;*/
-}
-
-#praesiGeoloek {
-	left:0;
-}
-
-#praesiGeofs {
-	right: 0px;
-	text-align: left;
-}
-
-.plakate {
-	position: absolute;
-	height: 100%;
-	right: 0;
-}
-
-#mensaplan {
-	font-size: 20px;
+.praesidienst h3 {
+	margin:0;
+	font-size:12pt;
+	font-weight:bold;
 }
