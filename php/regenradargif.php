@@ -18,7 +18,7 @@
 
   // wetteronline.de provides regenradar forecast for the next 90 minutes
   // include prev 30 mins to illustrate trend, stop at 80 mins just in case later images aren't on their server yet
-  for($j=-30; $j<=80; $j+=5)
+  for($j=-30; $j<=75; $j+=15)
   {
     // timestamp $j minutes into the past/future
     $stamp = strtotime("$j minutes");
@@ -49,7 +49,7 @@
     ob_start();
     imagegif($cropped);   // convert to GIF
     $frames[]=ob_get_contents();
-    $dauer[]=($j==80?300:50);   // show last frame a bit longer to aid dinstinguishing the end of the loop from the other frames
+    $dauer[]=($j==75?300:100);   // show last frame a bit longer to aid dinstinguishing the end of the loop from the other frames
     ob_end_clean();
   }
   
