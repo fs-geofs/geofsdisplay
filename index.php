@@ -4,7 +4,10 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>geofsdisplay</title>
   <link rel="stylesheet" type="text/css" href="css/style.css" />
-  <meta name="viewport" content="width=device-width; initial-scale=1.0;" />  
+  <meta name="viewport" content="width=device-width; initial-scale=1.0;" />
+  <link rel="apple-touch-icon" href="images/displaylogo.png" />
+  <!--<link rel="apple-touch-startup-image" href="images/startupscreen.png" />-->
+  <meta name="apple-mobile-web-app-capable" content="yes" />  
   <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script src="./js/hammerjs-v2.0.6.min.js"></script>
   <script src="./js/index.js"></script>
