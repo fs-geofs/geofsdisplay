@@ -13,6 +13,7 @@ function reloadDisplayContent() {
   loadPlakate();
   loadNews();
   loadMensa();
+  loadVLAufzeichnung();
 }
 
 function updateClock() {
@@ -42,9 +43,7 @@ function updateClock() {
 function init() {
   currentHour = new Date().getHours();
   updateClock();
-  loadNews();
-  loadPlakate();
-  loadMensa();
+  reloadDisplayContent();
   refreshFahrplan();
   refreshWetter();
   refreshRegenradarGif();
