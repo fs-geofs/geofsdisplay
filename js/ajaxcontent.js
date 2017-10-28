@@ -22,7 +22,7 @@ function loadVLAufzeichnung() {
           (e) => new Date(e.attributes.start) - new Date() < 4*7*24*60*60*1000
         )
         .map(
-          (e) => e.attributes.lecturer + ': ' +
+          (e) => e.attributes.lecturers.join(', ') + ': ' +
                  e.attributes.title    + ' (' +
                  (new Date(e.attributes.start)).toLocaleString()     + ' &ndash; ' +
                  (new Date(e.attributes.end))  .toLocaleTimeString() + ')'
