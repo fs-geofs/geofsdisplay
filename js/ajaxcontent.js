@@ -19,17 +19,18 @@ function loadVLAufzeichnung() {
       var text =
         responseText.data
         .filter(
-          (e) => new Date(e.attributes.start) - new Date() < 4*7*24*60*60*1000
+          (e) => new Date(e.attributes.start) - new Date() < 2*7*24*60*60*1000  // next two weeks
         )
         .map(
-          (e) => e.attributes.lecturers.join(', ') + ': ' +
-                 e.attributes.title    + ' (' +
-                 (new Date(e.attributes.start)).toLocaleString()     + ' &ndash; ' +
-                 (new Date(e.attributes.end))  .toLocaleTimeString() + ')'
+          (e) => '<span class="vlaufz-datetime">' +
+		             (new Date(e.attributes.start)).toLocaleString()    .slice(0, -3) + ' &ndash; ' +
+                     (new Date(e.attributes.end  )).toLocaleTimeString().slice(0, -3) + '</span> ' +
+				 '<span class="vlaufz-lecturers">' + e.attributes.lecturers.join(', ') + '</span> ' +
+                 '<span class="vlaufz-title">' + e.attributes.title + '</span> '
         )
         .join('<br>');
         
-      $('#vlaufzeichnung').html('In den nächsten 4 Wochen sind ' + (text ? 'folgende' : 'keine') + ' Vorlesungsaufzeichnungen im GEO1-Hörsaal geplant' + (text ? ':<br>'+text : '.'));
+      $('#vlaufzeichnung').html('In den nächsten zwei Wochen sind ' + (text ? 'folgende' : 'keine') + ' Vorlesungsaufzeichnungen im GEO1-Hörsaal geplant' + (text ? ':<br>'+text : '.'));
     },
     error: function(responseText) { console.error("could not get VL-Aufzeichnungen from electures.uni-muenster.de"); $('#vlaufzeichnung').html("Fehler beim Laden der Daten von electures.uni-muenster.de"); }
   });
