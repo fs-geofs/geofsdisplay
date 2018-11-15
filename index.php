@@ -8,7 +8,7 @@
   <link rel="apple-touch-icon" href="images/displaylogo.png" />
   <!--<link rel="apple-touch-startup-image" href="images/startupscreen.png" />-->
   <meta name="apple-mobile-web-app-capable" content="yes" />  
-  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.js"></script>
   <script src="./js/hammerjs-v2.0.6.min.js"></script>
   <script src="./js/index.js"></script>
   <script src="./js/displaycontent.js"></script>
