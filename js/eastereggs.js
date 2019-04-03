@@ -25,3 +25,7 @@ function EASTERbaconandEGGs() {
 function EASTERzwiebelandGEEK() {
   showEasterEgg("https://geofs.uni-muenster.de/zeugs/zwiebel/");
 }
+
+function hockenpong() {
+  showEasterEgg("http://hockenpong.de/");
+}

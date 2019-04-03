@@ -36,7 +36,7 @@
           <p class="newstext" id="wetter"></p>
         </div>
         <div class="latestNews">
-          <h3 class="newstitle">Heute in der Mensa am Ring:</h3>
+          <h3 class="newstitle">Heute in der Mensa am <span ondblclick="hockenpong()">Ring</span>:</h3>
           <div class="newstext" id="mensa"></div>
         </div>
         <div class="latestNews">
