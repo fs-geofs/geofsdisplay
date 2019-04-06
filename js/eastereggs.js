@@ -27,5 +27,5 @@ function EASTERzwiebelandGEEK() {
 }
 
 function hockenpong() {
-  showEasterEgg("http://hockenpong.de/");
+  showEasterEgg("https://hockenpong.de/");
 }
