@@ -26,7 +26,7 @@ inotifywait -m -e CREATE,MOVE $watchdir --format '%f' |
       # file is flagged with noresize in filename
       if [[ $filename =~ .+\.noresize.+ ]]; then
         echo "nothing to do for '$filename'"
-        exit 0;
+        continue
       fi
 
       # resize image, store with ".noresize" appended
