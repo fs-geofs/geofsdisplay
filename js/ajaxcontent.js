@@ -19,7 +19,7 @@ function loadVLAufzeichnung() {
       var text =
         responseText.data
         .filter(
-          (e) => new Date(e.attributes.start) - new Date() < 2*7*24*60*60*1000  // next two weeks
+          (e) => new Date(e.attributes.start) - new Date() < 7*24*60*60*1000  // next week
         )
         .map(
           (e) => '<span class="vlaufz-datetime">' +
@@ -30,7 +30,7 @@ function loadVLAufzeichnung() {
         )
         .join('<br>');
         
-      $('#vlaufzeichnung').html('In den nächsten zwei Wochen sind ' + (text ? 'folgende' : 'keine') + ' Vorlesungsaufzeichnungen im GEO1-Hörsaal geplant' + (text ? ':<br>'+text : '.'));
+      $('#vlaufzeichnung').html('Innerhalb der nächsten Woche sind ' + (text ? 'folgende' : 'keine') + ' Vorlesungsaufzeichnungen im GEO1-Hörsaal geplant' + (text ? ':<br>'+text : '.'));
     },
     error: function(responseText) { console.error("could not get VL-Aufzeichnungen from electures.uni-muenster.de"); $('#vlaufzeichnung').html("Fehler beim Laden der Daten von electures.uni-muenster.de"); }
   });
