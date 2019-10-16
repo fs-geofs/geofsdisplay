@@ -23,8 +23,8 @@ function loadVLAufzeichnung() {
         )
         .map(
           (e) => '<span class="vlaufz-datetime">' +
-		             (new Date(e.attributes.start)).toLocaleString()    .slice(0, -3) + ' &ndash; ' +
-                     (new Date(e.attributes.end  )).toLocaleTimeString().slice(0, -3) + '</span> ' +
+		             (new Date(e.attributes.start)).toLocaleString('de-DE')    .slice(0, -3) + ' &ndash; ' +
+                     (new Date(e.attributes.end  )).toLocaleTimeString('de-DE').slice(0, -3) + '</span> ' +
 				 '<span class="vlaufz-lecturers">' + e.attributes.lecturers.join(', ') + '</span> ' +
                  '<span class="vlaufz-title">' + e.attributes.title + '</span> '
         )
