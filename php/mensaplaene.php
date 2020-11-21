@@ -1,5 +1,5 @@
 <?php
-  $url = "http://speiseplan.stw-muenster.de/mensa_am_ring.xml";
+  $url = "https://bburke.gitlab.io/mymensa2openmensa/feed/ring.xml";
   /* 
     Available data:
     
@@ -33,19 +33,19 @@
     $meals = [];
   	
     // Go through all of today's meals
-    foreach($mensa->date[0]->item as $meal)
+    foreach($mensa->canteen[0]->day[0]->category as $mealcat)
     {
-      if($meal->category != 'Dessertbuffet')
+      if($mealcat['name'] != 'Dessertbuffet')
       {
         // Potentially alter "Heute am Aktionsstand WOK" and "Veganes Tagesangebot" to make it shorter,
         // swap spaces for nbsp's to prevent linebreaks, remove all dots because why are they even there
-        $search = ['Heute am Aktionsstand (WOK)', 'Veganes Tagesangebot', ' ', '.'];
-        $replace = ['Buffetsaal', 'Vegan', '&nbsp;', ''];
-        $category = str_replace($search, $replace, $meal->category);
+        $search = ['Heute am Aktionsstand (WOK)', 'Veganes Tagesangebot', ' mit drei Beilagen', ' ', '.'];
+        $replace = ['Buffetsaal', 'Vegan', '', '&nbsp;', ''];
+        $category = str_replace($search, $replace, $mealcat['name']);
         
         // Remove additives lists from meal description (always in round brackets) and also remove
         // possible newlines that would cause the JS to complain about an "unterminated string literal"
-        $name = preg_replace(['/ ?\([^(]*\)/', '/\s/'], ['', ' '], $meal->meal);
+        $name = preg_replace(['/ ?\([^(]*\)/', '/\s/'], ['', ' '], $mealcat->meal->name);
         
         $meals[] = "<th>$category</th><td>$name</td>";
       }
