@@ -29,11 +29,12 @@
   else
   {
     $mensa = simplexml_load_string($input) or die("Could not parse XML to object");
+    $mensa->registerXPathNamespace("om", "http://openmensa.org/open-mensa-v2");  // needed for XPath to work
     
     $meals = [];
   	
     // Go through all of today's meals
-    foreach($mensa->canteen[0]->day[0]->category as $mealcat)
+    foreach($mensa->xpath('//om:day[@date="' . date('Y-m-d') . '"]/om:category') as $mealcat)
     {
       if($mealcat['name'] != 'Dessertbuffet')
       {
