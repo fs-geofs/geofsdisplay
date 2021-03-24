@@ -1,25 +1,16 @@
 <?php
   $url = "https://bburke.gitlab.io/mymensa2openmensa/feed/ring.xml";
   /* 
-    Available data:
-    
-    mensa_aasee.xml
-    mensa_am_ring.xml
-    mensa_bispinghof.xml
-    mensa_da_vinci.xml
-    mensa_steinfurt.xml
-    bistro_coerdehof.xml
-    bistro_denkpause.xml
-    bistro_durchblick.xml
-    bistro_frieden.xml
-    bistro_huefferstift.xml
-    bistro_kabu.xml
-    bistro_katho.xml
-    bistro_oeconomicum.xml
-    
-    "Die Dateien werden Mo. - Sa. von 06:01 bis 16:01 Uhr alle 5 Minuten aktualisiert."
-    
-    The Studentenwerk outsourced this to digital signage company infomax.de
+    Sadly, the Studierendenwerk doesn't provide an API or XML files anymore.
+    Instead, all we've got is the "MyMensa" webapp.
+    But luckily, some lovely people have written a parser for it!
+    Its output is fed into OpenMensa and can be retrieved from above link.
+    See also:
+    - https://github.com/fs-geofs/geofsdisplay/issues/14
+    - https://github.com/chk1/stw2openmensa/issues/15#issuecomment-728103161
+    - https://gitlab.com/BBurke/mymensa2openmensa
+    - https://bburke.gitlab.io/mymensa2openmensa/index.html
+    - https://openmensa.org/c/1169/
   */
    
   if (! $input = @file_get_contents($url))
@@ -29,7 +20,7 @@
   else
   {
     $mensa = simplexml_load_string($input) or die("Could not parse XML to object");
-    $mensa->registerXPathNamespace("om", "http://openmensa.org/open-mensa-v2");  // needed for XPath to work
+    $mensa->registerXPathNamespace("om", "http://openmensa.org/open-mensa-v2");  // needed for XPath to work, see https://www.php.net/manual/de/simplexml.examples-basic.php#102599
     
     $meals = [];
   	
