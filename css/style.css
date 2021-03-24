@@ -316,13 +316,3 @@ p {
 	font-size:12pt;
 	font-weight:bold;
 }
-
-.vlaufz-datetime {
-	font-weight: bold;
-}
-.vlaufz-lecturers:after {
-	content: ":";
-}
-.vlaufz-title {
-	font-style: italic;
-}

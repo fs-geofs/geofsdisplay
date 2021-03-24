@@ -13,7 +13,6 @@ function reloadDisplayContent() {
   loadPlakate();
   loadNews();
   loadMensa();
-  loadVLAufzeichnung();
 }
 
 function updateClock() {

@@ -29,8 +29,8 @@ function showPlakate() {
 }
 
 function showNews() {
-  // remove all news that are not regenradar, weather, mensa, or vlaufzeichnung (i.e. everything after vlaufzeichnung)
-  while((e = document.getElementById('vlaufzeichnung').parentElement.nextSibling) != null) e.remove();
+  // remove all news that are not regenradar, weather, or mensa (i.e. everything after mensa)
+  while((e = document.getElementById('mensa').parentElement.nextSibling) != null) e.remove();
   // add news from global object
   news.forEach(function(newsbeitrag) {
     document.getElementById("news").innerHTML +=

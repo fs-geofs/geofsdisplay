@@ -8,35 +8,6 @@ function loadMensa() {
   // not really a need to refresh (the display starts freshly every morning and the day's mensaplan is basically never changed during that day)
 }
 
-function loadVLAufzeichnung() {
-  $.ajax({
-    // current URL (may be/will quite likely be subject to change)
-    url: 'https://electures.uni-muenster.de/electures/kraken/public_schedule/GEO1.json',
-    // permanent URL (currently redirects to above URL but doesn't send CORS headers, so not directly useable)
-    // url: 'https://electures.uni-muenster.de/room/GEO1.json',
-    type: 'GET',
-    success: function(responseText) {
-      var text =
-        responseText.data
-        .filter(
-          (e) => new Date(e.attributes.start) - new Date() < 7*24*60*60*1000  // next week
-        )
-        .map(
-          (e) => '<span class="vlaufz-datetime">' +
-		             (new Date(e.attributes.start)).toLocaleString('de-DE')    .slice(0, -3) + ' &ndash; ' +
-                     (new Date(e.attributes.end  )).toLocaleTimeString('de-DE').slice(0, -3) + '</span> ' +
-				 '<span class="vlaufz-lecturers">' + e.attributes.lecturers.join(', ') + '</span> ' +
-                 '<span class="vlaufz-title">' + e.attributes.title + '</span> '
-        )
-        .join('<br>');
-        
-      $('#vlaufzeichnung').html('Innerhalb der nächsten Woche sind ' + (text ? 'folgende' : 'keine') + ' Vorlesungsaufzeichnungen im GEO1-Hörsaal geplant' + (text ? ':<br>'+text : '.'));
-    },
-    error: function(responseText) { console.error("could not get VL-Aufzeichnungen from electures.uni-muenster.de"); $('#vlaufzeichnung').html("Fehler beim Laden der Daten von electures.uni-muenster.de"); }
-  });
-  // not really a need to refresh (the display starts freshly every morning and lectures are not scheduled to be captured the day they are held)
-}
-
 function refreshFahrplan() {
   $.ajax({
     url: 'php/fahrplan.php',
