@@ -37,10 +37,10 @@
     {
       if($mealcat['name'] != 'Dessertbuffet')
       {
-        // Potentially alter "Heute am Aktionsstand WOK" and "Veganes Tagesangebot" to make it shorter,
+        // Potentially alter lengthy names to make the first table column as narrow as possible,
         // swap spaces for nbsp's to prevent linebreaks, remove all dots because why are they even there
-        $search = ['Heute am Aktionsstand (WOK)', 'Veganes Tagesangebot', ' mit drei Beilagen', ' ', '.'];
-        $replace = ['Buffetsaal', 'Vegan', '', '&nbsp;', ''];
+        $search = ['Heute am Aktionsstand (WOK)', 'Veganes Tagesangebot', 'Hauptkomponente', ' mit drei Beilagen', ' ', '.'];
+        $replace = ['Buffetsaal', 'Vegan', 'Menü', '', '&nbsp;', ''];
         $category = str_replace($search, $replace, $mealcat['name']);
         
         // Remove additives lists from meal description (always in round brackets) and also remove
