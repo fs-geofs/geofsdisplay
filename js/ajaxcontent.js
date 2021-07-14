@@ -36,34 +36,3 @@ function refreshRegenradarGif() {
   // refresh every 5 minutes
   window.setTimeout(refreshRegenradarGif, 5*60*1000);
 }
-
-// currently replaced by GIF method, but keep for potential later use
-/*
-function refreshRegenradar() {
-  if (regenradarTimeout) clearTimeout(regenradarTimeout);
-  // get new images from wetteronline.de via regenradar.php
-  $.ajax({
-    url: 'php/regenradar.php',
-    type: 'GET',
-    success: function(responseText) { document.getElementById('regenradar').innerHTML = responseText + '<img id="mapfooter">'; },
-    error: function(responseText) { console.error("could not get regenradar.php"); }
-  });
-  // refresh every 5 minutes
-  window.setTimeout(refreshRegenradar, 5*60*1000);
-  // cycle through frames with 0.5 sec for each frame
-  regenradarTimeout = window.setTimeout(cycleRegenradar, 500);
-}
-
-function cycleRegenradar() {
-  // hide old frame
-  document.getElementById('regenradar').childNodes[currentRegenradar].classList.add('preload');
-  // update count (it's always 23 frames)
-  currentRegenradar = (currentRegenradar+1) % 23;
-  // show new frame
-  document.getElementById('regenradar').childNodes[currentRegenradar].classList.remove('preload');
-  
-  document.getElementById('mapfooter').src = document.getElementById('regenradar').childNodes[currentRegenradar].src;
-  
-  // schedule next cycle (show last frame a little bit longer)
-  regenradarTimeout = window.setTimeout(cycleRegenradar, (currentRegenradar==22 ? 2000 : 500));
-}*/

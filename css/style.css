@@ -256,22 +256,6 @@ p {
 
 #regenradar img {
 	width:100%;
-	/* for use with regenradar.php instead of regenradargif.php
-	
-	width:340px;   // dimensions of the wanted map crop
-	height:225px;
-	object-fit:cover;   // the above causes the image to distort - this repairs that 
-	object-position:0 0;
-}
-
-#regenradar img.preload {
-	display:none;
-}
-
-#mapfooter {
-	// "zoom" the image to the wetteronline footer
-	height:20px!important;
-	object-position:0 -360px!important; */
 }
 
 /* PRÄSIDIENST TABLES */

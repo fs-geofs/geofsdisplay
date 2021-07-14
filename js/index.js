@@ -4,9 +4,6 @@ var plakate = [],
   currentPlakat = 0,
   plakatTimeout = null,
   plakatTouchHandler = null;
-  // not needed when using regenradar via GIF method
-  //currentRegenradar = 0,
-  //regenradarTimeout = null,
 
 // updates display content that changes rarely (rescans the plakate and news directories and refreshes mensaplan)
 function reloadDisplayContent() {

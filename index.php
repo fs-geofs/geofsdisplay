@@ -40,7 +40,6 @@
           <div class="newstext" id="mensa"></div>
         </div>
       </div>
-      <!-- <img id="regenradar" src="http://www.wetteronline.de/?pid=p_radar_map&ireq=true&src=radar/vermarktung/p_radar_map_forecast/forecastLoop/NRW/latestForecastLoop.gif"> -->
     </div>
     
     <div id="footer">
