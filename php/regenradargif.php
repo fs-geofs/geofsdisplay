@@ -5,53 +5,63 @@
   // deep download link: http://www.phpclasses.org/browse/download/zip/package/3163/name/gifmerge-2007-09-25.zip
   include('GIFEncoder.class.php');
   
-  // wetteronline.de refuses to respond when no user agent is transmitted -> let's trick them
+  // add user agent to be fair
   // http://stackoverflow.com/questions/2107759/php-file-get-contents-and-headers
   $options = array('http'=>array('method'=>"GET", 'header'=>"User-Agent: geofsdisplay v1.0\r\n"));
   $context = stream_context_create($options);
   
-  // wetteronline.de needs timestamps in UTC
-  date_default_timezone_set("UTC");
+  // get current data from wetteronline.de API endpoint
+  $data = json_decode(file_get_contents('https://tiles.wo-cloud.com/metadata?lg=wr&period=periodCurrentLowRes', false, $context));
   
   $frames=[];
   $dauer=[];
 
-  // wetteronline.de provides regenradar forecast for the next 90 minutes
-  // include prev 30 mins to illustrate trend, stop at 80 mins just in case later images aren't on their server yet
-  for($j=-30; $j<=75; $j+=15)
+  foreach($data->timesteps as $step)
   {
-    // timestamp $j minutes into the past/future
-    $stamp = strtotime("$j minutes");
-    // extract date() values for easy use in URL assembling
-    $Y = date('Y', $stamp);
-    $m = date('m', $stamp);
-    $d = date('d', $stamp);
-    $H = date('H', $stamp);
-    $i = date('i', $stamp);
-    // round minutes down to 5 min intervals
-    $i = floor($i / 5) * 5;
-    // and still have a leading zero
-    if($i<10) $i = "0$i";
+    // build tiles parameter. this is how Christoph found the necessary content for this parameter:
+    //   1. open browser console -> go to https://www.wetteronline.de/regenradar/nordrhein-westfalen -> observe network traffic
+    //   2. look at images starting with "composite" -> select the one that has Münster in it (look for NRW border around Osnabrück)
+    //   3. copy `tiles` parameter -> base64_decode (function `atob` in JavaScript) -> you get this long string starting with "topo|"
+    //   4. replace variables in path as seen below -> remove "_cities_excluded" from "rr_geooverlay" so that city names are INcluded
+    //   -> that's it!
+    // note that "ZL" stands for "zoom level" and that (66,42) and (132,84) correspond to Münster's tile numbers (when rounded) in the
+    // "slippy tile names" scheme (https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames) in zoom level 7 and 8 respectively.
+    $tiles = 'topo|1;;0;0|wetterradar/prozess/tiles/geolayer/rasterimages/rr_topography/v1/ZL8/512/132_84.jpg$r|2;;0;0;false' .
+             '|' . $step->layers->europe->rain->ptypPath . $step->layers->europe->rain->path . '/' . implode('/', $step->layers->europe->rain->timePath) . '/ZL7/522/sprite/66_42.png' .
+             ';' . $step->layers->global->rain->ptypPath . $step->layers->global->rain->path . '/' . implode('/', $step->layers->global->rain->timePath) . '/ZL7/522/border/66_42.png$i' .
+             '|1;;0;0|geo/prozess/karten/produktkarten/wetterradar/generate/rasterTiles/rr_geooverlay/v2/ZL8/512/132_84.png';
+    // build URL (parameters `k` and `time` left out as they don't seem to be necessary, "rr" probably stands for "rain radar")
+    $url = 'https://tiles.wo-cloud.com/composite?format=png&lg=rr&tiles=' . urlencode(base64_encode($tiles));
 
-    // retrieve PNG from wetteronline.de """API"""
-    $datei = file_get_contents("http://www.wetteronline.de/?pid=p_radar_map&ireq=true&src=wmapsextract/vermarktung/prog2maps/short_range/$Y/$m/$d/NRW/grey_flat/$Y$m$d$H$i" . "_NRW.png", false, $context);
+    // retrieve PNG from wetteronline.de API
+    $datei = file_get_contents($url);
     // Turn the data into an image
     $image = imagecreatefromstring($datei);
     
-    // Crop the area around Münster, allowing space at the bottom to later add the footer
-    $cropped = imagecrop($image, ['x' => 0, 'y' => 0, 'width' => 520, 'height' => 365]);
-    // Extract the map's footer that holds the wetteronline logo and, most importantly, the frames' timestamp
-    $footer = imagecrop($image, ['x' => 0, 'y' => 550, 'width' => 520, 'height' => 21]);
-    // Copy the footer onto the cropped map
-    imagecopy($cropped, $footer, 0, 344, 0, 0, 520, 21);
+    // Crop away Düsseldorf and Köln at the bottom so that Münster is vertically centered
+    $cropped = imagecrop($image, ['x' => 0, 'y' => 0, 'width' => 512, 'height' => 365]);
+    
+    // Add the frame's timestamp as text below the "Münster" label
+    // 1. Extract the timestamp
+    $timezoneoffset = $data->liveid[14];   // `liveid` has format "20210714-1640-2" -- I *assume* the last bit is the timezone
+    $hour = ($step->layers->europe->rain->timePath[3] + $timezoneoffset) % 24;   // `timePath` has format ["2021","07","14","16","40","v11"]
+    $time = ($hour < 10 ? '0' : '') . $hour . ':' . $step->layers->europe->rain->timePath[4];   // leading zero, hour, colon, minute
+    // 2. Choose a text color
+    $textcolor = imagecolorallocate($cropped, 0, 0, 0);   // nice and simple black
+    // 3. Write onto the image (5 uses the biggest font size, (342,178) puts it under the "Münster" label, use (450,345) for bottom right corner)
+    imagestring($cropped, 5, 342, 178, $time, $textcolor);
     
     // save frame
     ob_start();
     imagegif($cropped);   // convert to GIF
     $frames[]=ob_get_contents();
-    $dauer[]=($j==75?300:100);   // show last frame a bit longer to aid dinstinguishing the end of the loop from the other frames
+    $dauer[]=100;
     ob_end_clean();
   }
+  
+  // add last frame once more for double the time so that it is displayed 3x longer and thus aids dinstinguishing the end of the loop from the other frames
+  $frames[] = $frames[count($frames)-1];
+  $dauer[] = 200;
   
   // Build GIF
   $gif = new GIFEncoder($frames,$dauer,0,2,0,0,0,'bin');
