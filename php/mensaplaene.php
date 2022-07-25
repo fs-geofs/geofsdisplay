@@ -48,7 +48,7 @@
     $results = $mensa->xpath($base4today . '/om:category[starts-with(@name, "Beilage") or starts-with(@name, "Dessert")]');
     // Sort mealcats by price in ascending order (all side dishes with the same price are in the same mealcat)
     // The prices are all in the same format, so a simple string compare is sufficient
-    usort($results, fn($a, $b) => strcmp($a->meal[0]->price[0], $b->meal[0]->price[0]));
+    usort($results, function ($a, $b) { return strcmp($a->meal[0]->price[0], $b->meal[0]->price[0]); });
     foreach($results as $mealcat) {
       $names = [];  // each side dish of the same price is one "meal" in this mealcat -> gather them
       $price = format_price($mealcat->meal[0]);  // all have the same price, so simply take the first's
@@ -62,7 +62,7 @@
     // Catch-all for the rest (categories that haven't been queried explicitly beforehand)
     $catnames_so_far = ['Speisenangebot', 'Heute', 'Imbiss', 'Beilage', 'Dessert'];
     // Build selectors as before
-    $catnames_so_far = array_map(fn($v) => "starts-with(@name, '$v')", $catnames_so_far);
+    $catnames_so_far = array_map(function ($v) { return "starts-with(@name, '$v')"; }, $catnames_so_far);
     // Use the "not(...)" function to select all nodes which are the opposite of what was selected so far
     $results = $mensa->xpath($base4today . '/om:category[not(' . implode($catnames_so_far, " or ") . ')]');
     // Just output everything we found very simply
