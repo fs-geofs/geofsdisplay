@@ -30,7 +30,7 @@
     function format_price($meal) { return $meal->price ? '(' . str_replace('.', ',', $meal->price) . '&nbsp;€)' : ''; }
     
     // Go through all of today's proper meals (named "Speisenangebot", "Heute am Aktionsstand (WOK)", "Imbiss X", where X=1,2,3...)
-    foreach(['Speisenangebot'=>'Oben', 'Heute'=>'Unten', 'Imbiss'=>'Imbiss', 'Eintopf'=>'Eintopf'] as $catname_in_xml => $catname_to_display) {
+    foreach(['Speisenangebot'=>'Oben', 'Heute'=>'Unten', 'Imbiss'=>'Imbiss', 'Eintopf'=>'Eintopf', 'Wurstbeilage'=>'Wurstbeilage'] as $catname_in_xml => $catname_to_display) {
       $mensaplan .= "<h4>$catname_to_display</h4><ul>";
       $results = $mensa->xpath($base4today . '/om:category[starts-with(@name, "' . $catname_in_xml . '")]');
       foreach($results as $mealcat) {
@@ -60,7 +60,7 @@
     $mensaplan .= '</ul>';
 
     // Catch-all for the rest (categories that haven't been queried explicitly beforehand)
-    $catnames_so_far = ['Speisenangebot', 'Heute', 'Imbiss', 'Eintopf', 'Beilage', 'Dessert'];
+    $catnames_so_far = ['Speisenangebot', 'Heute', 'Imbiss', 'Eintopf', 'Wurstbeilage', 'Beilage', 'Dessert'];
     // Build selectors as before
     $catnames_so_far = array_map(function ($v) { return "starts-with(@name, '$v')"; }, $catnames_so_far);
     // Use the "not(...)" function to select all nodes which are the opposite of what was selected so far
