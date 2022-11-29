@@ -65,10 +65,18 @@
     $catnames_so_far = array_map(function ($v) { return "starts-with(@name, '$v')"; }, $catnames_so_far);
     // Use the "not(...)" function to select all nodes which are the opposite of what was selected so far
     $results = $mensa->xpath($base4today . '/om:category[not(' . implode($catnames_so_far, " or ") . ')]');
-    // Just output everything we found very simply
+    // Go through everything we found
     foreach($results as $mealcat) {
       foreach($mealcat as $meal) {
-        $mensaplan .= "<h4>Info</h4><p>$meal->name</p>";
+        // If it has a price, it's probably just another meal with a so far unknown category
+        if($meal->price) {
+          // Treat it like the other meals
+          $mensaplan .= "<h4>Sonstiges</h4><ul><li>" . format_name($meal) . " " . format_price($meal) . "</li></ul>";
+        // Otherwise it's probably just an info like "we will have reduced opening hours soon"
+        } else {
+          // Very plain output
+          $mensaplan .= "<h4>Info</h4><p>$meal->name</p>";
+        }
       }
     }
   }
