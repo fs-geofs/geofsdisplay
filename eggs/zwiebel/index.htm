@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<title></title>
+        <style type="text/css">
+			html, body {
+				margin:0;
+				padding:0;
+			}
+			canvas {
+				z-index:1;
+			}
+			#seealso {
+				position:absolute;
+				padding:5px;
+				background:#000;
+				color:#fff;
+				bottom:0px;
+				left:0px;
+				z-index:2;
+				font-size:12px;
+				font-family:Verdana, Geneva, sans-serif;
+			}
+			#seealso a {
+				color:#fff;
+			}
+		</style>
+	</head>
+	<body>
+	<script type="text/javascript">
+			
+			var images = [];
+			var width = [];
+			var height = [];
+			var folder = '';
+			var total = 1;
+
+			var canvas = document.createElement( 'canvas' );
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;
+			canvas.style.display = 'block';
+			document.body.appendChild( canvas );
+
+			var context = canvas.getContext( '2d' );
+			
+			var bg = document.createElement( 'img' );
+			bg.addEventListener('load', function() {
+				context.drawImage(bg , 0, 0, canvas.width, canvas.height);
+			}, false );
+			bg.src = 'bg.png';
+  			
+			
+			
+			var loaded = 0;
+			
+			
+			for(var i = 0; i < total; i++) {
+				images[i] = document.createElement( 'img' );
+				images[i].addEventListener('load', function() {
+					width[this.rel] = Math.floor( this.width / 2 );
+					height[this.rel] = Math.floor( this.height / 2 );
+					
+					if(loaded == (total-1)) {
+					
+						document.addEventListener( 'mousemove', onMouseEvent, false );
+						document.addEventListener( 'touchstart', onTouchEvent, false );
+						document.addEventListener( 'touchmove', onTouchEvent, false );
+						loaded = true;
+					} else {
+						loaded++;
+					}
+	
+				}, false );
+				images[i].rel = i;
+				images[i].src = folder+(i+1)+".png";
+			}
+			
+			var currentIndex = 0;
+			function onMouseEvent( event ) {
+				context.drawImage( images[currentIndex], event.clientX - width[currentIndex], event.clientY - height[currentIndex] );
+				
+				if(currentIndex == (total-1)) currentIndex = 0;
+				else currentIndex++;
+
+			}
+			
+			function onTouchEvent( event ) {
+
+				event.preventDefault();
+
+				for ( var i = 0; i < event.touches.length; i++ ) {
+					
+					context.drawImage( images[currentIndex], event.touches[i].pageX - width[currentIndex], event.touches[i].pageY - height[currentIndex] );
+				
+					if(currentIndex == (total-1)) currentIndex = 0;
+					else currentIndex++;
+
+				}
+
+			}
+
+		</script>
+
+	</body>
+</html>
+

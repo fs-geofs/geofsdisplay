@@ -11,7 +11,19 @@
   $context = stream_context_create($options);
   
   // get current data from wetteronline.de API endpoint
-  $data = json_decode(file_get_contents('https://tiles.wo-cloud.com/metadata?lg=wr&period=periodCurrentLowRes', false, $context));
+  $data = json_decode(file_get_contents('https://tiles.wo-cloud.com/metadata?lg=wr&period=periodCurrentLowRes&type=period', false, $context));
+  
+  // load marker icon for Münster once
+  $markerImage = null;
+  $markerData = @file_get_contents('https://radar.wo-cloud.com/desktop/assets/shared/position-marker/positionMarker_mDPI.png', false, $context);
+  if ($markerData !== false)
+  {
+    $markerImage = imagecreatefromstring($markerData);
+    if ($markerImage !== false)
+    {
+      imagesavealpha($markerImage, true);
+    }
+  }
   
   $frames=[];
   $dauer=[];
@@ -26,10 +38,10 @@
     //   -> that's it!
     // note that "ZL" stands for "zoom level" and that (66,42) and (132,84) correspond to Münster's tile numbers (when rounded) in the
     // "slippy tile names" scheme (https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames) in zoom level 7 and 8 respectively.
-    $tiles = 'topo|1;;0;0|wetterradar/prozess/tiles/geolayer/rasterimages/rr_topography/v1/ZL8/512/132_84.jpg$r|2;;0;0;false' .
-             '|' . $step->layers->europe->rain->ptypPath . $step->layers->europe->rain->path . '/' . implode('/', $step->layers->europe->rain->timePath) . '/ZL7/522/sprite/66_42.png' .
-             ';' . $step->layers->global->rain->ptypPath . $step->layers->global->rain->path . '/' . implode('/', $step->layers->global->rain->timePath) . '/ZL7/522/border/66_42.png$i' .
-             '|1;;0;0|geo/prozess/karten/produktkarten/wetterradar/generate/rasterTiles/rr_geooverlay/v2/ZL8/512/132_84.png';
+    $tiles = 'seamask|1;;0;0|geo/prozess/karten/produktkarten/wetterradar/generate/topoTiles/bw_landseamask/v2/ZL8/512/132_84.png$' .
+             'topo|1;;0;0|geo/prozess/karten/produktkarten/wetterradar/generate/topoTiles/rr_topography/v3/ZL8/512/132_84.jpg$' .
+             'r|2;;0;0;false|' . $step->layers->europe->rain->ptypPath . $step->layers->europe->rain->path . '/' . implode('/', $step->layers->europe->rain->timePath) . '/ZL7/522/sprite/66_42.png;' .
+             $step->layers->global->rain->ptypPath . $step->layers->global->rain->path . '/' . implode('/', $step->layers->global->rain->timePath) . '/ZL7/522/border/66_42.png';
     // build URL (parameters `k` and `time` left out as they don't seem to be necessary, "rr" probably stands for "rain radar")
     $url = 'https://tiles.wo-cloud.com/composite?format=png&lg=rr&tiles=' . urlencode(base64_encode($tiles));
 
@@ -41,6 +53,17 @@
     // Crop away Düsseldorf and Köln at the bottom so that Münster is vertically centered
     $cropped = imagecrop($image, ['x' => 0, 'y' => 0, 'width' => 512, 'height' => 365]);
     
+    $markerX = 320;
+    $markerY = 150;
+    $markerTextY = 140;
+    $markerTextX = $markerX;
+    if ($markerImage !== null)
+    {
+      imagecopy($cropped, $markerImage, $markerX, $markerY, 0, 0, imagesx($markerImage), imagesy($markerImage));
+      $markerTextY = $markerY + imagesy($markerImage) + 5;
+      $markerTextX = $markerX + (imagesx($markerImage) / 2) - ((imagefontwidth(5) * strlen('Muenster')) / 2);
+    }
+    
     // Add the frame's timestamp as text below the "Münster" label
     // 1. Extract the timestamp
     $timezoneoffset = $data->liveid[14];   // `liveid` has format "20210714-1640-2" -- I *assume* the last bit is the timezone
@@ -48,6 +71,7 @@
     $time = ($hour < 10 ? '0' : '') . $hour . ':' . $step->layers->europe->rain->timePath[4];   // leading zero, hour, colon, minute
     // 2. Choose a text color
     $textcolor = imagecolorallocate($cropped, 0, 0, 0);   // nice and simple black
+    imagestring($cropped, 5, (int)$markerTextX, (int)$markerTextY, 'Muenster', $textcolor);
     // 3. Write onto the image (5 uses the biggest font size, (342,178) puts it under the "Münster" label, use (450,345) for bottom right corner)
     imagestring($cropped, 5, 342, 178, $time, $textcolor);
     

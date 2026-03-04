@@ -19,11 +19,11 @@ function showEasterEgg(url) {
 }
 
 function EASTERbaconandEGGs() {
-  showEasterEgg("https://geofs.uni-muenster.de/zeugs/bacon/");
+  showEasterEgg("eggs/bacon/index.htm");
 }
 
 function EASTERzwiebelandGEEK() {
-  showEasterEgg("https://geofs.uni-muenster.de/zeugs/zwiebel/");
+  showEasterEgg("eggs/zwiebel/index.htm");
 }
 
 function hockenpong() {

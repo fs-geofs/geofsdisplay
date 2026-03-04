@@ -2,7 +2,7 @@
 /*
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 ::
-::	GIFEncoder Version 2.0 by László Zsidi, http://gifs.hu
+::	GIFEncoder Version 2.0 by Lï¿½szlï¿½ Zsidi, http://gifs.hu
 ::
 ::	This class is a rewritten 'GifMerge.class.php' version.
 ::
@@ -47,7 +47,7 @@ Class GIFEncoder {
 	::	GIFEncoder...
 	::
 	*/
-	function GIFEncoder	(
+	function __construct	(
 							$GIF_src, $GIF_dly, $GIF_lop, $GIF_dis,
 							$GIF_red, $GIF_grn, $GIF_blu, $GIF_mod
 						) {

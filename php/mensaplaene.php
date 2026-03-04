@@ -25,12 +25,13 @@
     $mensaplan = '';
 
     // Remove additives lists from meal description (always in round brackets)
+    // Note: The XML now includes additional <note> elements with environmental data (CO2, water usage) and allergen info
     function format_name($meal) { return trim(preg_replace('/ ?:?\([^(]*\)/', '', $meal->name)); }
     // Convert dot to comma (correct German decimal delimiter), add Euro sign, put in brackets
     function format_price($meal) { return $meal->price ? '(' . str_replace('.', ',', $meal->price) . '&nbsp;€)' : ''; }
-    
-    // Go through all of today's proper meals (named "Speisenangebot", "Heute am Aktionsstand (WOK)", "Imbiss X", where X=1,2,3...)
-    foreach(['Speisenangebot'=>'Oben', 'Heute'=>'Unten', 'Imbiss'=>'Imbiss', 'Eintopf'=>'Eintopf', 'Wurstbeilage'=>'Wurstbeilage'] as $catname_in_xml => $catname_to_display) {
+
+    // Go through all of today's proper meals (currently: "Hauptkomponenten ", "Grill")
+    foreach(['Hauptkomponenten'=>'Hauptkomponenten', 'Grill'=>'Grill'] as $catname_in_xml => $catname_to_display) {
       $mensaplan .= "<h4>$catname_to_display</h4><ul>";
       $results = $mensa->xpath($base4today . '/om:category[starts-with(@name, "' . $catname_in_xml . '")]');
       foreach($results as $mealcat) {
@@ -43,9 +44,9 @@
       $mensaplan .= '</ul>';
     }
 
-    // Go through all side dishes (named "Beilagen X" and "Dessert X", where X=1,2,3...)
+    // Go through all side dishes (named "Beilagen X", where X=1,2,3...)
     $mensaplan .= '<h4>Beilagen</h4><ul>';
-    $results = $mensa->xpath($base4today . '/om:category[starts-with(@name, "Beilage") or starts-with(@name, "Dessert")]');
+    $results = $mensa->xpath($base4today . '/om:category[starts-with(@name, "Beilage")]');
     // Sort mealcats by price in ascending order (all side dishes with the same price are in the same mealcat)
     // The prices are all in the same format, so a simple string compare is sufficient
     usort($results, function ($a, $b) { return strcmp($a->meal[0]->price[0], $b->meal[0]->price[0]); });
@@ -59,8 +60,24 @@
     }
     $mensaplan .= '</ul>';
 
+    // Go through all desserts (named "Dessert X", where X=1,2,3...)
+    $mensaplan .= '<h4>Dessert</h4><ul>';
+    $results = $mensa->xpath($base4today . '/om:category[starts-with(@name, "Dessert")]');
+    // Sort mealcats by price in ascending order (all desserts with the same price are in the same mealcat)
+    // The prices are all in the same format, so a simple string compare is sufficient
+    usort($results, function ($a, $b) { return strcmp($a->meal[0]->price[0], $b->meal[0]->price[0]); });
+    foreach($results as $mealcat) {
+      $names = [];  // each dessert of the same price is one "meal" in this mealcat -> gather them
+      $price = format_price($mealcat->meal[0]);  // all have the same price, so simply take the first's
+      foreach($mealcat as $meal) {
+        $names [] = format_name($meal);
+      }
+      $mensaplan .= "<li>" . implode($names, ', ') . " $price</li>";
+    }
+    $mensaplan .= '</ul>';
+
     // Catch-all for the rest (categories that haven't been queried explicitly beforehand)
-    $catnames_so_far = ['Speisenangebot', 'Heute', 'Imbiss', 'Eintopf', 'Wurstbeilage', 'Beilage', 'Dessert'];
+    $catnames_so_far = ['Hauptkomponenten', 'Grill', 'Beilage', 'Dessert'];
     // Build selectors as before
     $catnames_so_far = array_map(function ($v) { return "starts-with(@name, '$v')"; }, $catnames_so_far);
     // Use the "not(...)" function to select all nodes which are the opposite of what was selected so far

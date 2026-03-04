@@ -1,17 +1,11 @@
-<?php $url =  "https://geofs.uni-muenster.de/wp/geoloek/praesenzzeiten"; 
-$input = @file_get_contents($url) or die('Could not access file: $url'); 
+<?php
+$url =  getenv("GEOFS_BASE_PAGE") ?? "https://geofs.uni-muenster.de/"; 
+$url .= "wp/geoloek/praesenzzeiten/";
 
-// remove any attributes from tags, to ensure there is no unwanted styling
-$input = preg_replace("/<([a-z][a-z0-9]*)[^>]*?(\/?)>/i",'<$1$2>', $input);
+$input = @file_get_contents($url) or die('Could not access file: $url');
 
-// replace newlines with ", " to make better use of the available space
-/* $input = preg_replace("/<br\/?>/i", ", ", $input); */
-
-if( preg_match( '~<table\s*>\s*(.*?)\s*</table>~si', $input, $content ) ) 
-{ 
-    echo '<table>';
-    echo trim ( $content[1] );
-    echo '</table>';
+if( preg_match( '~(<table[^>]*id="praesenzzeiten"[^>]*>.*</table>)~si', $input, $content ) ) {
+    echo trim($content[1]);
 }
 ?>
 

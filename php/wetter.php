@@ -1,5 +1,5 @@
 <?php
-  $url = "https://www.uni-muenster.de/Klima/";
+  $url = "https://www.uni-muenster.de/BAI/data/weather2.txt";
    
   if (! $input = @file_get_contents($url))
   {
