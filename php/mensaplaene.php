@@ -1,16 +1,9 @@
 <?php
   $url = "https://bburke.gitlab.io/mymensa2openmensa/feed/ring.xml";
-  /* 
-    Sadly, the Studierendenwerk doesn't provide an API or XML files anymore.
+  /* Sadly, the Studierendenwerk doesn't provide an API or XML files anymore.
     Instead, all we've got is the "MyMensa" webapp.
     But luckily, some lovely people have written a parser for it!
     Its output is fed into OpenMensa and can be retrieved from above link.
-    See also:
-    - https://github.com/fs-geofs/geofsdisplay/issues/14
-    - https://github.com/chk1/stw2openmensa/issues/15#issuecomment-728103161
-    - https://gitlab.com/BBurke/mymensa2openmensa
-    - https://bburke.gitlab.io/mymensa2openmensa/index.html
-    - https://openmensa.org/c/1169/
   */
    
   if (! $input = @file_get_contents($url))
@@ -20,7 +13,7 @@
   else
   {
     $mensa = simplexml_load_string($input) or die("Could not parse XML to object");
-    $mensa->registerXPathNamespace("om", "http://openmensa.org/open-mensa-v2");  // needed for XPath to work, see https://www.php.net/manual/de/simplexml.examples-basic.php#102599
+    $mensa->registerXPathNamespace("om", "http://openmensa.org/open-mensa-v2");  // needed for XPath to work
     $base4today = '//om:day[@date="' . date('Y-m-d') . '"]';  // XPath base string to select the <day> node for today
     $mensaplan = '';
 
@@ -28,56 +21,32 @@
     function format_name($meal) { return trim(preg_replace('/ ?:?\([^(]*\)/', '', $meal->name)); }
     // Convert dot to comma (correct German decimal delimiter), add Euro sign, put in brackets
     function format_price($meal) { return $meal->price ? '(' . str_replace('.', ',', $meal->price) . '&nbsp;€)' : ''; }
-    
-    // Go through all of today's proper meals (named "Speisenangebot", "Heute am Aktionsstand (WOK)", "Imbiss X", where X=1,2,3...)
-    foreach(['Speisenangebot'=>'Oben', 'Heute'=>'Unten', 'Imbiss'=>'Imbiss', 'Eintopf'=>'Eintopf', 'Wurstbeilage'=>'Wurstbeilage'] as $catname_in_xml => $catname_to_display) {
-      $mensaplan .= "<h4>$catname_to_display</h4><ul>";
-      $results = $mensa->xpath($base4today . '/om:category[starts-with(@name, "' . $catname_in_xml . '")]');
-      foreach($results as $mealcat) {
-        foreach($mealcat as $meal) {
-          $name = format_name($meal);
-          $price = format_price($meal);
-          $mensaplan .= "<li>$name $price</li>";
-        }
-      }
-      $mensaplan .= '</ul>';
-    }
 
-    // Go through all side dishes (named "Beilagen X" and "Dessert X", where X=1,2,3...)
-    $mensaplan .= '<h4>Beilagen</h4><ul>';
-    $results = $mensa->xpath($base4today . '/om:category[starts-with(@name, "Beilage") or starts-with(@name, "Dessert")]');
-    // Sort mealcats by price in ascending order (all side dishes with the same price are in the same mealcat)
-    // The prices are all in the same format, so a simple string compare is sufficient
-    usort($results, function ($a, $b) { return strcmp($a->meal[0]->price[0], $b->meal[0]->price[0]); });
-    foreach($results as $mealcat) {
-      $names = [];  // each side dish of the same price is one "meal" in this mealcat -> gather them
-      $price = format_price($mealcat->meal[0]);  // all have the same price, so simply take the first's
-      foreach($mealcat as $meal) {
-        $names [] = format_name($meal);
-      }
-      $mensaplan .= "<li>" . implode($names, ', ') . " $price</li>";
-    }
-    $mensaplan .= '</ul>';
+    // Hole ALLE Kategorien für den heutigen Tag auf einmal
+    $categories = $mensa->xpath($base4today . '/om:category');
 
-    // Catch-all for the rest (categories that haven't been queried explicitly beforehand)
-    $catnames_so_far = ['Speisenangebot', 'Heute', 'Imbiss', 'Eintopf', 'Wurstbeilage', 'Beilage', 'Dessert'];
-    // Build selectors as before
-    $catnames_so_far = array_map(function ($v) { return "starts-with(@name, '$v')"; }, $catnames_so_far);
-    // Use the "not(...)" function to select all nodes which are the opposite of what was selected so far
-    $results = $mensa->xpath($base4today . '/om:category[not(' . implode($catnames_so_far, " or ") . ')]');
-    // Go through everything we found
-    foreach($results as $mealcat) {
-      foreach($mealcat as $meal) {
-        // If it has a price, it's probably just another meal with a so far unknown category
-        if($meal->price) {
-          // Treat it like the other meals
-          $mensaplan .= "<h4>Sonstiges</h4><ul><li>" . format_name($meal) . " " . format_price($meal) . "</li></ul>";
-        // Otherwise it's probably just an info like "we will have reduced opening hours soon"
-        } else {
-          // Very plain output
-          $mensaplan .= "<h4>Info</h4><p>$meal->name</p>";
+    // Prüfen, ob es für heute überhaupt Einträge gibt (z.B. am Wochenende geschlossen)
+    if (!$categories) {
+        $mensaplan = "<p>Heute gibt es keinen Speiseplan (oder die Mensa ist geschlossen).</p>";
+    } else {
+        // Alle gefundenen Kategorien dynamisch durchlaufen
+        foreach($categories as $category) {
+            // Kategoriename aus dem Attribut "name" auslesen
+            $catName = (string) $category['name'];
+            $mensaplan .= "<h4>" . htmlspecialchars($catName) . "</h4><ul>";
+
+            // Alle Gerichte innerhalb dieser Kategorie durchlaufen
+            foreach($category->meal as $meal) {
+                $name = format_name($meal);
+                $price = format_price($meal);
+                
+                // Preis nur anhängen, wenn einer existiert (inkl. Leerzeichen davor)
+                $priceStr = $price ? " " . $price : "";
+                
+                $mensaplan .= "<li>{$name}{$priceStr}</li>";
+            }
+            $mensaplan .= '</ul>';
         }
-      }
     }
   }
   
