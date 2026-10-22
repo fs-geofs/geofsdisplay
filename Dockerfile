@@ -1,14 +1,15 @@
-FROM php:7.3-apache
+FROM php:8.5.12-apache
 
 # Installiere GD und Cron
+# 8.5.12 fixes CVE-2026-109618 and CVE-2026-109619 (unauthenticated RCE).
 RUN apt-get update && apt-get install -y \
     libpng-dev \
-    libjpeg-dev \
+    libjpeg62-turbo-dev \
     libfreetype6-dev \
     cron \
-    # Entferne die explizite --with-freetype und --with-jpeg Konfiguration
-    # und installiere gd direkt. Dies funktioniert oft besser bei älteren Images.
-    && docker-php-ext-install gd
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j"$(nproc)" gd \
+    && rm -rf /var/lib/apt/lists/*
 
 # Apache Rewrite aktivieren
 RUN a2enmod rewrite
