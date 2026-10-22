@@ -1,7 +1,6 @@
 FROM php:8.5.12-apache
 
 # Installiere GD und Cron
-# 8.5.12 fixes CVE-2026-109618 and CVE-2026-109619 (unauthenticated RCE).
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg62-turbo-dev \
