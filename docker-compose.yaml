@@ -1,6 +1,9 @@
 services:
     geofsdisplay:
-        build: .
+        build:
+            context: .
+            # The Docker bridge has no working masquerade here, so apt cannot resolve deb.debian.org.
+            network: host
         container_name: geofsdisplay
         ports:
             - "8080:80"
