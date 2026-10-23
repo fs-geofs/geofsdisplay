@@ -39,7 +39,7 @@ inotifywait -m -e CREATE,MOVE $watchdir --format '%f' |
     elif [[ $filename =~ .+\.pdf$ ]]; then
       # convert pdf to png
       echo "converting '$filename' to png"
-      convert -density 300 -trim "$filepath" "$watchdir/$filenoext.png"
+      convert -density 300 "$filepath" "$watchdir/$filenoext.png"
       rm -f "$filepath"
 
     else

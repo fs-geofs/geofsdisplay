@@ -9,8 +9,8 @@ services:
             - "8080:80"
         volumes:
             - ./displaycontent:/var/www/html/displaycontent
-            - ./php:/var/www/html/php
             - ./geofsdisplay_logs:/var/log
         restart: unless-stopped
         environment:
             - GEOFS_BASE_PAGE=https://giv-geofs.uni-muenster.de/
+

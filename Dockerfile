@@ -5,7 +5,9 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg62-turbo-dev \
     libfreetype6-dev \
-    cron \
+    inotify-tools \
+    imagemagick \
+    supervisor \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j"$(nproc)" gd \
     && rm -rf /var/lib/apt/lists/*
@@ -13,10 +15,17 @@ RUN apt-get update && apt-get install -y \
 # Apache Rewrite aktivieren
 RUN a2enmod rewrite
 
+# imagemagick enable pdf
+RUN sed -i 's|<policy domain="coder" rights="none" pattern="PDF" />|<!-- <policy domain="coder" rights="none" pattern="PDF" /> -->|' /etc/ImageMagick-6/policy.xml
+
 # Apache root setzen & Rechte
 WORKDIR /var/www/html
 COPY . /var/www/html/
 RUN chown -R www-data:www-data /var/www/html
+
+# Add user to be used for the resizer.
+# this is the first created user -> UID 1000 -> docker host user has access to files created by this user
+RUN useradd ResizeUser
 
 # Fehleranzeige im Container
 RUN echo "display_errors=On\n" \
@@ -27,4 +36,5 @@ RUN echo "display_errors=On\n" \
          > /usr/local/etc/php/conf.d/dev.ini
 
 # Start Apache im Vordergrund
-CMD ["apache2-foreground"]
+CMD ["/usr/bin/supervisord", "-c", "supervisord.conf"]
+
