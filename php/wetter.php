@@ -17,5 +17,8 @@
     $luftdruck    = $wetterdaten[6];        
   }
   
-  echo"<strong>Aktuelles Wetter vom Dach des GEO1</strong> (Stand $uhrzeit Uhr)<br />Temperatur: <strong>$temperatur&nbsp;°C</strong> &nbsp;&bull;&nbsp; Luftfeuchte: <strong>$luftfeuchte&nbsp;%</strong> &nbsp;&bull;&nbsp; Wind: <strong>$windstaerke&nbsp;bft aus $windrichtung</strong>";
+  echo "<strong>Aktuelles Wetter vom Dach des GEO1</strong> (Stand $uhrzeit Uhr)<br>"
+     . "Temperatur: <strong>$temperatur&nbsp;°C</strong><br>"
+     . "Luftfeuchte: <strong>$luftfeuchte&nbsp;%</strong><br>"
+     . "Wind: <strong>$windstaerke&nbsp;bft aus $windrichtung</strong>";
 ?>

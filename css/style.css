@@ -258,6 +258,41 @@ p {
 	width:100%;
 }
 
+/* Keep the whole weather readout inside the radar card, above the footer. */
+@media only screen and (min-device-width: 481px) {
+  #news {
+    height: 100%;
+  }
+
+  #news > .latestNews:first-child {
+    max-height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    margin-bottom: 0;
+  }
+
+  #regenradar {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  #regenradar img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center top;
+  }
+
+  #wetter {
+    flex: 0 0 auto;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+}
+
 /* PRÄSIDIENST TABLES */
 /* DISPLAY AND DESKTOP ONLY (NOT ON MOBILE) */
 @media only screen and (min-device-width: 481px) {
