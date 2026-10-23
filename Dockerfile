@@ -15,9 +15,6 @@ RUN apt-get update && apt-get install -y \
 # Apache Rewrite aktivieren
 RUN a2enmod rewrite
 
-# imagemagick enable pdf
-RUN sed -i 's|<policy domain="coder" rights="none" pattern="PDF" />|<!-- <policy domain="coder" rights="none" pattern="PDF" /> -->|' /etc/ImageMagick-6/policy.xml
-
 # Apache root setzen & Rechte
 WORKDIR /var/www/html
 COPY . /var/www/html/
