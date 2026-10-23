@@ -23,7 +23,7 @@ foreach ($alledateien as $datei) {
 
     // nur Dateien mit erlaubter extension (s.o.) zulassen
     if (in_array($dateiinfo['extension'], $fileExts)) {
-        $outputnews[] = ['title' => $dateiinfo['filename'], 'text' => implode(file($ordner."/".$datei, FILE_IGNORE_NEW_LINES), "<br>")];
+        $outputnews[] = ['title' => $dateiinfo['filename'], 'text' => implode("<br>", file($ordner."/".$datei, FILE_IGNORE_NEW_LINES))];
     }
 }
 

@@ -14,7 +14,7 @@ function setPlakat(index) {
   var url, duration;
   if (index === plakate.length) {
     url = 'http://ruthe.de/cartoons/strip_' + getRandom(2036) + '.jpg';
-    duration = 5;
+    duration = 10;
     currentPlakat = -1;
   } else {
     // otherwise use filename from plakate array

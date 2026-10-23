@@ -56,7 +56,7 @@
       foreach($mealcat as $meal) {
         $names [] = format_name($meal);
       }
-      $mensaplan .= "<li>" . implode($names, ', ') . " $price</li>";
+      $mensaplan .= "<li>" . implode(', ', $names) . " $price</li>";
     }
     $mensaplan .= '</ul>';
 
@@ -72,7 +72,7 @@
       foreach($mealcat as $meal) {
         $names [] = format_name($meal);
       }
-      $mensaplan .= "<li>" . implode($names, ', ') . " $price</li>";
+      $mensaplan .= "<li>" . implode(', ', $names) . " $price</li>";
     }
     $mensaplan .= '</ul>';
 
@@ -81,7 +81,7 @@
     // Build selectors as before
     $catnames_so_far = array_map(function ($v) { return "starts-with(@name, '$v')"; }, $catnames_so_far);
     // Use the "not(...)" function to select all nodes which are the opposite of what was selected so far
-    $results = $mensa->xpath($base4today . '/om:category[not(' . implode($catnames_so_far, " or ") . ')]');
+    $results = $mensa->xpath($base4today . '/om:category[not(' . implode(" or ", $catnames_so_far) . ')]');
     // Go through everything we found
     foreach($results as $mealcat) {
       foreach($mealcat as $meal) {
